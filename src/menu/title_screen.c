@@ -265,10 +265,14 @@ s32 intro_sound_test(void) {
     if (gPlayer1Controller->buttonPressed & U_CBUTTONS) { selected_sound--; play_sfx = 1; }
     if (gPlayer1Controller->buttonPressed & D_CBUTTONS) { selected_sound++; play_sfx = 1; }
 
-    if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | Z_TRIG | START_BUTTON)) {
+    if (gPlayer1Controller->buttonPressed & (START_BUTTON)) {
         gDebugLevelSelect = 0;
         return LEVEL_RESTART_GAME;
     }
+
+
+    print_text_centered(160, 80, "SEELCT SOUND");
+    print_text_centered(160, 30, "PRESS START BUTTON");
 
     if (selected_song == SEQ_COUNT) selected_song = 0;
     if (selected_song == -1) selected_song = SEQ_COUNT - 1;
