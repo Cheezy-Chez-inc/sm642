@@ -1,5 +1,6 @@
 #include <PR/ultratypes.h>
 
+#include "model_ids.h"
 #include "sm64.h"
 #include "area.h"
 #include "behavior_data.h"
@@ -280,6 +281,19 @@ void bhv_mario_update(void) {
         }
 
         i++;
+    }
+
+    if (gMarioState->controller->buttonPressed & L_TRIG) {
+        gMarioState->currentCharacter++;
+        gMarioState->currentCharacter %= 2;
+        switch (gMarioState->currentCharacter) {
+            case 0:
+                cur_obj_set_model(MODEL_MARIO);
+                break;
+            case 1:
+                cur_obj_set_model(MODEL_LUIGI);
+                break;
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 #include <ultra64.h>
 
+#include "PR/os_libc.h"
 #include "sm64.h"
 #include "seq_ids.h"
 #include "dialog_ids.h"
@@ -32,6 +33,7 @@
 #include "puppyprint.h"
 #include "puppylights.h"
 #include "level_commands.h"
+#include "rtc.h"
 
 #include "config.h"
 
@@ -1192,6 +1194,8 @@ UNUSED static s32 play_mode_unused(void) {
 
 s32 update_level(void) {
     s32 changeLevel = FALSE;
+    update_rtc();
+    osSyncPrintf("%d%d%d\n", gRtcState.hour, gRtcState.min, gRtcState.sec);
 
     switch (sCurrPlayMode) {
         case PLAY_MODE_NORMAL:
