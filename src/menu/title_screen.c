@@ -271,7 +271,7 @@ s32 intro_sound_test(void) {
     }
 
 
-    print_text_centered(160, 90, "SEELCT SOUND");
+    print_text_centered(160, 120, "SEELCT SOUND");
     print_text_centered(160, 30, "PRESS START BUTTON");
 
     if (selected_song == SEQ_COUNT) selected_song = 0;
