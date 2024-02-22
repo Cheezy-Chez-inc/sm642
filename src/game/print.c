@@ -370,6 +370,14 @@ void add_glyph_texture(s8 glyphIndex) {
     gSPDisplayList(gDisplayListHead++, dl_hud_img_load_tex_block);
 }
 
+void add_glyph_texture_big(s8 glyphIndex) {
+    const Texture *const *glyphs = segmented_to_virtual(main_hud_lut);
+
+    gDPPipeSync(gDisplayListHead++);
+    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, glyphs[glyphIndex]);
+    gSPDisplayList(gDisplayListHead++, dl_hud_img_load_tex_block_32);
+}
+
 #ifndef WIDESCREEN
 /**
  * Clips textrect into the boundaries defined.

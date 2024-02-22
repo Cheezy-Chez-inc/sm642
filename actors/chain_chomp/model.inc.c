@@ -31,6 +31,12 @@ ALIGNED8 static const Texture chain_chomp_seg6_texture_060233D0[] = {
 #include "actors/chain_chomp/chain_chomp_eye.rgba16.inc.c"
 };
 
+// 0x06021BD0
+ALIGNED8 static const Texture chain_chomp_seg6_texture_kek[] = {
+#include "actors/chain_chomp/chain_chomp_pupil_no_iris.rgba16.inc.c"
+};
+
+
 // 0x06023BD0
 static const Vtx chain_chomp_seg6_vertex_06023BD0[] = {
     {{{     0,      0,    582}, 0, {   990,    380}, {0xb2, 0xb2, 0xb2, 0xff}}},
@@ -320,6 +326,7 @@ const Gfx chain_chomp_seg6_dl_06024700[] = {
     gsSPEndDisplayList(),
 };
 
+
 // 0x06024900 - 0x06024940
 const Gfx chain_chomp_seg6_dl_06024900[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chain_chomp_seg6_texture_060223D0),
@@ -381,6 +388,35 @@ const Gfx chain_chomp_seg6_dl_06024AA8[] = {
     gsSPVertex(chain_chomp_seg6_vertex_060249E8, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
+    gsSPEndDisplayList(),
+};
+
+const Gfx chain_chomp_seg6_dl_kek[] = {
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chain_chomp_seg6_texture_kek),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x666666ff),
+    gsSPVertex(chain_chomp_seg6_vertex_060249E8, 12, 0),
+    gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
+    gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
+    gsSPEndDisplayList(),
+};
+
+const Gfx chain_chomp_seg6_dl_kek2[] = {
+    gsDPPipeSync(),
+    gsDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA),
+    gsSPClearGeometryMode(G_SHADING_SMOOTH),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_WRAP | G_TX_NOMIRROR, G_TX_NOMASK, G_TX_NOLOD, G_TX_WRAP | G_TX_NOMIRROR, G_TX_NOMASK, G_TX_NOLOD),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPTileSync(),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 5, G_TX_NOLOD, G_TX_CLAMP, 5, G_TX_NOLOD),
+    gsDPSetTileSize(0, 0, 0, (32 - 1) << G_TEXTURE_IMAGE_FRAC, (32 - 1) << G_TEXTURE_IMAGE_FRAC),
+    gsSPDisplayList(chain_chomp_seg6_dl_kek),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_OFF),
+    gsDPPipeSync(),
+    gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
+    gsSPSetGeometryMode(G_SHADING_SMOOTH),
     gsSPEndDisplayList(),
 };
 

@@ -21,6 +21,7 @@ extern const Gfx chain_chomp_seg6_dl_06024CF0[];
 extern const Gfx chain_chomp_seg6_dl_06024D60[];
 extern const Gfx chain_chomp_seg6_dl_06024F50[];
 extern const Gfx chain_chomp_seg6_dl_06024FC0[];
+extern const Gfx chain_chomp_seg6_dl_kek2[];
 extern const struct Animation *const chain_chomp_seg6_anims_06025178[];
 
 // koopa
@@ -132,5 +133,7 @@ extern const Gfx whomp_seg6_dl_0601FFA0[];
 extern const Gfx whomp_seg6_dl_06020038[];
 extern const struct Animation *const whomp_seg6_anims_06020A04[];
 extern const Collision whomp_seg6_collision_06020A0C[];
+
+#include "koopa_with_shell/geo_header.h"
 
 #endif

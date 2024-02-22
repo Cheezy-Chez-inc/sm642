@@ -13,9 +13,16 @@ const GeoLayout chain_chomp_geo[] = {
          GEO_OPEN_NODE(),
             GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, chain_chomp_seg6_dl_06024240),
             GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, chain_chomp_seg6_dl_06024D60),
-            GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, chain_chomp_seg6_dl_06024B00),
+         GEO_CLOSE_NODE(),
+         GEO_OPEN_NODE(),
+               GEO_SWITCH_CASE(2, geo_switch_anim_state),
+               GEO_OPEN_NODE(),
+                  GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, chain_chomp_seg6_dl_06024B00),
+                  GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, chain_chomp_seg6_dl_kek2),
+               GEO_CLOSE_NODE(),
          GEO_CLOSE_NODE(),
       GEO_CLOSE_NODE(),
    GEO_CLOSE_NODE(),
-   GEO_END(),
+GEO_CLOSE_NODE(), //! more close than open nodes
+GEO_END(),
 };

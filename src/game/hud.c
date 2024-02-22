@@ -125,6 +125,17 @@ void render_hud_tex_lut(s32 x, s32 y, Texture *texture) {
 }
 
 /**
+ * Renders a rgba16 16x16 glyph texture from a table list.
+ */
+void render_hud_tex_lut_big(s32 x, s32 y, Texture *texture) {
+    gDPPipeSync(gDisplayListHead++);
+    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture);
+    gSPDisplayList(gDisplayListHead++, &dl_hud_img_load_tex_block_32);
+    gSPTextureRectangle(gDisplayListHead++, x << 2, y << 2, (x + 31) << 2, (y + 31) << 2,
+                        G_TX_RENDERTILE, 0, 0, 4 << 10, 1 << 10);
+}
+
+/**
  * Renders a rgba16 8x8 glyph texture from a table list.
  */
 void render_hud_small_tex_lut(s32 x, s32 y, Texture *texture) {
@@ -514,6 +525,9 @@ void render_hud_camera_status(void) {
             render_hud_small_tex_lut(x + 4, y - 8, (*cameraLUT)[GLYPH_CAM_ARROW_UP]);
             break;
     }
+
+    render_hud_tex_lut_big(0, y, (*cameraLUT)[GLYPH_CAM_P1]);
+
 
     gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
 }

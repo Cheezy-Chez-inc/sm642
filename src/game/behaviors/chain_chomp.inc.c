@@ -427,6 +427,8 @@ void bhv_chain_chomp_update(void) {
             chain_chomp_act_unload_chain();
             break;
     }
+
+    obj_update_blinking(&o->oChainBlinkTimer, 30, 120, 3);
 }
 
 /**
