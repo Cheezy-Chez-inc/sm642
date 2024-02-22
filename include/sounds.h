@@ -96,6 +96,7 @@ enum SoundBank {
 
 // silence
 #define NO_SOUND 0x00000000
+#define NUM_SOUNDS 442
 
 /**
  * The table below defines all sounds that exist in the game, and which flags
@@ -588,5 +589,7 @@ enum SoundBank {
 #define SOUND_OBJ2_MONTY_MOLE_APPEAR             /* 0x90678081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x67, 0x80, SOUND_DISCRETE)
 #define SOUND_OBJ2_BOSS_DIALOG_GRUNT             /* 0x90694081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x69, 0x40, SOUND_DISCRETE)
 #define SOUND_OBJ2_MRI_SPINNING                  /* 0x906B0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x6B, 0x00, SOUND_DISCRETE)
+
+extern int gSoundTable[NUM_SOUNDS];
 
 #endif // SOUNDS_H

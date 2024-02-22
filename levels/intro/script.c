@@ -110,6 +110,7 @@ const LevelScript level_intro_mario_head_regular[] = {
     CALL_LOOP(/*arg*/ LVL_INTRO_REGULAR, /*func*/ lvl_intro_update),
     JUMP_IF(/*op*/ OP_EQ, /*arg*/ LEVEL_FILE_SELECT,  script_intro_file_select),
     JUMP_IF(/*op*/ OP_EQ, /*arg*/ LEVEL_LEVEL_SELECT, script_intro_level_select),
+    JUMP_IF(/*op*/ OP_EQ, /*arg*/ LEVEL_SOUND_TEST, script_intro_sound_test),
     JUMP(script_intro_main_level_entry),
 };
 
@@ -137,6 +138,7 @@ const LevelScript level_intro_mario_head_dizzy[] = {
     CALL_LOOP(/*arg*/ LVL_INTRO_GAME_OVER, /*func*/ lvl_intro_update),
     JUMP_IF(/*op*/ OP_EQ, /*arg*/ LEVEL_FILE_SELECT,  script_intro_file_select),
     JUMP_IF(/*op*/ OP_EQ, /*arg*/ LEVEL_LEVEL_SELECT, script_intro_level_select),
+    JUMP_IF(/*op*/ OP_EQ, /*arg*/ LEVEL_SOUND_TEST, script_intro_sound_test),
     JUMP(script_intro_main_level_entry),
 };
 
@@ -161,6 +163,27 @@ const LevelScript level_intro_entry_level_select[] = {
     JUMP(script_intro_main_level_entry_stop_music),
 };
 
+const LevelScript level_intro_entry_sound_test[] = {
+    INIT_LEVEL(),
+    LOAD_BEHAVIOR_DATA(),
+    LOAD_TITLE_SCREEN_BG(),
+    LOAD_YAY0(/*seg*/ SEGMENT_LEVEL_DATA, _debug_level_select_yay0SegmentRomStart, _debug_level_select_yay0SegmentRomEnd),
+    FIXED_LOAD(/*loadAddr*/ _goddardSegmentStart, /*romStart*/ _goddardSegmentRomStart, /*romEnd*/ _goddardSegmentRomEnd),
+    ALLOC_LEVEL_POOL(),
+
+    AREA(/*index*/ 1, intro_geo_debug_level_select),
+    END_AREA(),
+
+    FREE_LEVEL_POOL(),
+    LOAD_AREA(/*area*/ 1),
+    SET_MENU_MUSIC(/*seq*/ SEQ_MENU_TITLE_SCREEN),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0xFF, 0xFF, 0xFF),
+    SLEEP(/*frames*/ 16),
+    CALL_LOOP(/*arg*/ LVL_INTRO_SOUND_TEST, /*func*/ lvl_intro_update),
+    JUMP_IF(/*op*/ OP_EQ, /*arg*/ LEVEL_RESTART_GAME, script_intro_splash_screen),
+    JUMP(script_intro_main_level_entry_stop_music),
+};
+
 // These should be static, but C doesn't allow non-sized forward declarations of static arrays
 
 const LevelScript script_intro_file_select[] = {
@@ -179,6 +202,14 @@ const LevelScript script_intro_level_select[] = {
     CLEAR_LEVEL(),
     SLEEP(/*frames*/ 2),
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_level_select, _introSegmentBssStart, _introSegmentBssEnd),
+};
+
+const LevelScript script_intro_sound_test[] = {
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0xFF, 0xFF, 0xFF),
+    SLEEP(/*frames*/ 16),
+    CLEAR_LEVEL(),
+    SLEEP(/*frames*/ 2),
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_sound_test, _introSegmentBssStart, _introSegmentBssEnd),
 };
 
 const LevelScript script_intro_main_level_entry_stop_music[] = {

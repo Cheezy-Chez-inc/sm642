@@ -14,6 +14,7 @@
 #include "level_table.h"
 #include "seq_ids.h"
 #include "sm64.h"
+#include "sounds.h"
 #include "title_screen.h"
 
 /**
@@ -157,7 +158,7 @@ s32 intro_level_select(void) {
         // ... the level select quit combo is being pressed, which uses START. If this
         // is the case, quit the menu instead.
         if (gPlayer1Controller->buttonDown == (Z_TRIG | START_BUTTON | L_CBUTTONS)) { // quit level select
-            gDebugLevelSelect = FALSE;
+            gDebugLevelSelect = 0;
             return LEVEL_RESTART_GAME;
         }
         play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
@@ -188,7 +189,10 @@ s32 intro_regular(void) {
     print_intro_text();
 #ifdef DEBUG_LEVEL_SELECT
     if (gPlayer1Controller->buttonDown & L_TRIG) {
-        gDebugLevelSelect = TRUE;
+        gDebugLevelSelect = 1;
+    }
+    if (gPlayer1Controller->buttonDown & R_TRIG) {
+        gDebugLevelSelect = 2;
     }
 #endif
     if (gPlayer1Controller->buttonPressed & START_BUTTON) {
@@ -250,6 +254,39 @@ s32 intro_play_its_a_me_mario(void) {
     return LEVEL_NONE + 1;
 }
 
+s32 selected_song = 0;
+s32 selected_sound = 0;
+
+s32 intro_sound_test(void) {
+    u8 play_seq = 0;
+    u8 play_sfx = 0;
+    if (gPlayer1Controller->buttonPressed & L_CBUTTONS) { selected_song--; play_seq = 1; }
+    if (gPlayer1Controller->buttonPressed & R_CBUTTONS) { selected_song++; play_seq = 1; }
+    if (gPlayer1Controller->buttonPressed & U_CBUTTONS) { selected_sound--; play_sfx = 1; }
+    if (gPlayer1Controller->buttonPressed & D_CBUTTONS) { selected_sound++; play_sfx = 1; }
+
+    if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | Z_TRIG | START_BUTTON)) {
+        gDebugLevelSelect = 0;
+        return LEVEL_RESTART_GAME;
+    }
+
+    if (selected_song == SEQ_COUNT) selected_song = 0;
+    if (selected_song == -1) selected_song = SEQ_COUNT - 1;
+
+    if (selected_sound == NUM_SOUNDS) selected_sound = 0;
+    if (selected_sound == -1) selected_sound = NUM_SOUNDS;
+
+    if (play_seq) set_background_music(0, selected_song, 0);
+    if (play_sfx) {
+        Vec3f zero;
+        vec3f_set(zero, 0, 0, 0);
+        play_sound(gSoundTable[selected_sound], zero);
+    }
+    print_text_fmt_int(120, 80, "SEQ %d", selected_song);
+    print_text_fmt_int(120, 60, "SFX %d", selected_sound);
+    return LEVEL_NONE;
+}
+
 /**
  * Update intro functions to handle title screen actions.
  * Returns a level ID after their criteria is met.
@@ -264,13 +301,17 @@ s32 lvl_intro_update(s16 arg, UNUSED s32 unusedArg) {
         case LVL_INTRO_REGULAR:
 #ifdef DEBUG_LEVEL_SELECT
             if (gPlayer1Controller->buttonDown & L_TRIG) {
-                gDebugLevelSelect = TRUE;
+                gDebugLevelSelect = 1;
+            }
+            if (gPlayer1Controller->buttonDown & R_TRIG) {
+                gDebugLevelSelect = 2;
             }
 #endif
             // fallthrough
         case LVL_INTRO_GAME_OVER:           return (LEVEL_FILE_SELECT + gDebugLevelSelect);
 #endif
         case LVL_INTRO_LEVEL_SELECT:        return intro_level_select();
+        case LVL_INTRO_SOUND_TEST:          return intro_sound_test();
         default: return LEVEL_NONE;
     }
 }
