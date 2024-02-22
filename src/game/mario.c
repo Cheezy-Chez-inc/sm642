@@ -1229,6 +1229,10 @@ void update_mario_button_inputs(struct MarioState *m) {
         if (m->controller->buttonPressed & Z_TRIG  ) m->input |= INPUT_Z_PRESSED;
     }
 
+if (cur_obj_has_model(MODEL_LUIGI)){
+    m->vel[1] += 0.2;
+}
+
     if (m->input & INPUT_A_PRESSED) {
         m->framesSinceA = 0;
     } else if (m->framesSinceA < 0xFF) {
@@ -1803,6 +1807,7 @@ void init_mario(void) {
     gMarioState->actionTimer = 0;
     gMarioState->framesSinceA = 0xFF;
     gMarioState->framesSinceB = 0xFF;
+    
 
     gMarioState->invincTimer = 0;
 
@@ -1814,6 +1819,7 @@ void init_mario(void) {
         gMarioState->flags = (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
     }
 
+    
     gMarioState->forwardVel = 0.0f;
     gMarioState->squishTimer = 0;
 
@@ -1827,16 +1833,16 @@ void init_mario(void) {
     gMarioState->riddenObj = NULL;
     gMarioState->usedObj = NULL;
 
-    gMarioState->waterLevel = find_water_level(gMarioSpawnInfo->startPos[0], gMarioSpawnInfo->startPos[2]);
+    gMarioState->waterLevel =
+        find_water_level(gMarioSpawnInfo->startPos[0], gMarioSpawnInfo->startPos[2]);
 
     gMarioState->area = gCurrentArea;
     gMarioState->marioObj = gMarioObject;
     gMarioState->marioObj->header.gfx.animInfo.animID = -1;
     vec3s_copy(gMarioState->faceAngle, gMarioSpawnInfo->startAngle);
-    vec3_zero(gMarioState->angleVel);
+    vec3s_set(gMarioState->angleVel, 0, 0, 0);
     vec3s_to_vec3f(gMarioState->pos, gMarioSpawnInfo->startPos);
-    vec3f_copy(gMarioState->prevPos, gMarioState->pos);
-    vec3_zero(gMarioState->vel);
+    vec3f_set(gMarioState->vel, 0, 0, 0);
     gMarioState->floorHeight =
         find_floor(gMarioState->pos[0], gMarioState->pos[1], gMarioState->pos[2], &gMarioState->floor);
 
@@ -1853,20 +1859,16 @@ void init_mario(void) {
     update_mario_info_for_cam(gMarioState);
     gMarioState->marioBodyState->punchState = 0;
 
-    vec3f_copy(&gMarioState->marioObj->oPosVec, gMarioState->pos);
-    vec3s_to_vec3i(&gMarioState->marioObj->oMoveAngleVec, gMarioState->faceAngle);
+    gMarioState->marioObj->oPosX = gMarioState->pos[0];
+    gMarioState->marioObj->oPosY = gMarioState->pos[1];
+    gMarioState->marioObj->oPosZ = gMarioState->pos[2];
 
+    gMarioState->marioObj->oMoveAnglePitch = gMarioState->faceAngle[0];
+    gMarioState->marioObj->oMoveAngleYaw = gMarioState->faceAngle[1];
+    gMarioState->marioObj->oMoveAngleRoll = gMarioState->faceAngle[2];
+    
     vec3f_copy(gMarioState->marioObj->header.gfx.pos, gMarioState->pos);
     vec3s_set(gMarioState->marioObj->header.gfx.angle, 0, gMarioState->faceAngle[1], 0);
-
-    Vec3s capPos;
-    if (save_file_get_cap_pos(capPos)) {
-        struct Object *capObject = spawn_object(gMarioState->marioObj, MODEL_MARIOS_CAP, bhvNormalCap);
-        vec3s_to_vec3f(&capObject->oPosVec, capPos);
-
-        capObject->oForwardVel = 0;
-        capObject->oMoveAngleYaw = 0;
-    }
 }
 
 void init_mario_from_save_file(void) {
@@ -1897,4 +1899,82 @@ void init_mario_from_save_file(void) {
 
     gHudDisplay.coins = 0;
     gHudDisplay.wedges = 8;
+}
+
+u8 mario_is_near_edge(struct MarioState* m) {
+    u8 numPoints = 4;
+    f32 radius = 25.0f;
+    f32 falloff = 300.0f;
+    u16 step = 65536 / numPoints;
+    s16 angle = 0;
+    u8 near = 0;
+    for (u8 i = 0; i < numPoints && !near; i++) {
+        Vec3f p;
+        vec3f_set_dist_and_angle(m->pos, p, radius, 0, angle);
+        f32 diff = m->pos[1] - find_floor_height(p[0], p[1] + 200, p[2]);
+        if (diff > falloff) near = 1;
+        angle += step;
+    }
+    return near;
+}
+
+
+void init_player(u8 playerIndex) {
+
+    gMarioStates[playerIndex].actionTimer = 0;
+    gMarioStates[playerIndex].framesSinceA = 0xFF;
+    gMarioStates[playerIndex].framesSinceB = 0xFF;
+
+    gMarioStates[playerIndex].invincTimer = 0;
+
+    gMarioStates[playerIndex].flags = (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
+    gMarioStates[playerIndex].forwardVel = 0.0f;
+    gMarioStates[playerIndex].squishTimer = 0;
+
+    gMarioStates[playerIndex].hurtCounter = 0;
+    gMarioStates[playerIndex].healCounter = 0;
+
+    gMarioStates[playerIndex].capTimer = 0;
+    gMarioStates[playerIndex].quicksandDepth = 0.0f;
+
+    gMarioStates[playerIndex].heldObj = NULL;
+    gMarioStates[playerIndex].riddenObj = NULL;
+    gMarioStates[playerIndex].usedObj = NULL;
+
+    gMarioStates[playerIndex].waterLevel =
+        find_water_level(gPlayerSpawnInfos[playerIndex].startPos[0], gPlayerSpawnInfos[playerIndex].startPos[2]);
+
+    gMarioStates[playerIndex].area = gCurrentArea;
+    gMarioStates[playerIndex].marioObj = gMarioObject;
+    gMarioStates[playerIndex].marioObj->header.gfx.animInfo.animID = -1;
+    vec3s_copy(gMarioStates[playerIndex].faceAngle, gPlayerSpawnInfos[playerIndex].startAngle);
+    vec3s_set(gMarioStates[playerIndex].angleVel, 0, 0, 0);
+    vec3s_to_vec3f(gMarioStates[playerIndex].pos, gMarioSpawnInfo->startPos);
+    vec3f_set(gMarioStates[playerIndex].vel, 0, 0, 0);
+    gMarioStates[playerIndex].floorHeight =
+        find_floor(gMarioStates[playerIndex].pos[0], gMarioStates[playerIndex].pos[1], gMarioStates[playerIndex].pos[2], &gMarioStates[playerIndex].floor);
+
+    if (gMarioStates[playerIndex].pos[1] < gMarioStates[playerIndex].floorHeight) {
+        gMarioStates[playerIndex].pos[1] = gMarioStates[playerIndex].floorHeight;
+    }
+
+    gMarioStates[playerIndex].marioObj->header.gfx.pos[1] = gMarioStates[playerIndex].pos[1];
+
+    gMarioStates[playerIndex].action =
+        (gMarioStates[playerIndex].pos[1] <= (gMarioStates[playerIndex].waterLevel - 100)) ? ACT_WATER_IDLE : ACT_IDLE;
+
+    mario_reset_bodystate(&gMarioStates[0]);
+    update_mario_info_for_cam(&gMarioStates[0]);
+    gMarioStates[playerIndex].marioBodyState->punchState = 0;
+
+    gMarioStates[playerIndex].marioObj->oPosX = gMarioStates[playerIndex].pos[0];
+    gMarioStates[playerIndex].marioObj->oPosY = gMarioStates[playerIndex].pos[1];
+    gMarioStates[playerIndex].marioObj->oPosZ = gMarioStates[playerIndex].pos[2];
+
+    gMarioStates[playerIndex].marioObj->oMoveAnglePitch = gMarioStates[playerIndex].faceAngle[0];
+    gMarioStates[playerIndex].marioObj->oMoveAngleYaw = gMarioStates[playerIndex].faceAngle[1];
+    gMarioStates[playerIndex].marioObj->oMoveAngleRoll = gMarioStates[playerIndex].faceAngle[2];
+
+    vec3f_copy(gMarioStates[playerIndex].marioObj->header.gfx.pos, gMarioStates[playerIndex].pos);
+    vec3s_set(gMarioStates[playerIndex].marioObj->header.gfx.angle, 0, gMarioStates[playerIndex].faceAngle[1], 0);
 }

@@ -96,8 +96,9 @@ struct Object *gMarioObject;
  * An object variable that may have been used to represent the planned
  * second player. This is speculation, based on its position and its usage in
  * shadow.c.
+ // holy fuck lois im coming
  */
-// struct Object *gLuigiObject;
+struct Object *gLuigiObject;
 
 /**
  * The object whose behavior script is currently being updated.
@@ -221,6 +222,8 @@ struct ParticleProperties sParticleTypes[] = {
  */
 void copy_mario_state_to_object(void) {
     s32 i = 0;
+
+
     // L is real
     if (gCurrentObject != gMarioObject) {
         i++;
@@ -265,6 +268,9 @@ void spawn_particle(u32 activeParticleFlag, ModelID16 model, const BehaviorScrip
 void bhv_mario_update(void) {
     u32 particleFlags = 0;
     s32 i;
+    
+    gMarioState = &gMarioStates[gCurrentObject->oBehParams & 0xFF];
+    gMarioState->marioObj = gCurrentObject;
 
     particleFlags = execute_mario_action(gCurrentObject);
     gCurrentObject->oMarioParticleFlags = particleFlags;
@@ -465,7 +471,7 @@ void unload_objects_from_area(UNUSED s32 unused, s32 areaIndex) {
 /**
  * Spawn objects given a list of SpawnInfos. Called when loading an area.
  */
-void spawn_objects_from_info(UNUSED s32 unused, struct SpawnInfo *spawnInfo) {
+void spawn_objects_from_info(s32 isLuigi, struct SpawnInfo *spawnInfo) {
     gObjectLists = gObjectListArray;
     gTimeStopState = 0;
 
@@ -507,6 +513,12 @@ void spawn_objects_from_info(UNUSED s32 unused, struct SpawnInfo *spawnInfo) {
             // This change allows any object to use that param
             if (object->behavior == segmented_to_virtual(bhvMario)) {
                 gMarioObject = object;
+                geo_make_first_child(&object->header.gfx.node);
+            }
+
+            if (object->behavior == segmented_to_virtual(bhvLuigi)) {
+                gLuigiObject = object;
+                isLuigi = TRUE;
                 geo_make_first_child(&object->header.gfx.node);
             }
 

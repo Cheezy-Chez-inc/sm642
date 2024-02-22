@@ -71,8 +71,10 @@ uintptr_t gPhysicalZBuffer;
 
 // Mario Anims and Demo allocation
 void *gMarioAnimsMemAlloc;
+void *gLuigiAnimsMemAlloc;
 void *gDemoInputsMemAlloc;
 struct DmaHandlerList gMarioAnimsBuf;
+struct DmaHandlerList gLuigiAnimsBuf;
 struct DmaHandlerList gDemoInputsBuf;
 
 // General timer that runs as the game starts
@@ -729,6 +731,10 @@ void setup_game_memory(void) {
     gMarioAnimsMemAlloc = main_pool_alloc(MARIO_ANIMS_POOL_SIZE, MEMORY_POOL_LEFT);
     set_segment_base_addr(SEGMENT_MARIO_ANIMS, (void *) gMarioAnimsMemAlloc);
     setup_dma_table_list(&gMarioAnimsBuf, gMarioAnims, gMarioAnimsMemAlloc);
+    // Setup Luigi Animations
+    gLuigiAnimsMemAlloc = main_pool_alloc(MARIO_ANIMS_POOL_SIZE, MEMORY_POOL_LEFT);
+    set_segment_base_addr(19, (void *) gLuigiAnimsMemAlloc);
+    setup_dma_table_list(&gLuigiAnimsBuf, gLuigiAnims, gLuigiAnimsMemAlloc);
 #ifdef PUPPYPRINT_DEBUG
     set_segment_memory_printout(SEGMENT_MARIO_ANIMS, MARIO_ANIMS_POOL_SIZE);
     set_segment_memory_printout(SEGMENT_DEMO_INPUTS, DEMO_INPUTS_POOL_SIZE);
@@ -763,13 +769,13 @@ void thread5_game_loop(UNUSED void *arg) {
 #ifdef PUPPYCAM
     puppycam_boot();
 #endif
-
+    
     set_vblank_handler(2, &gGameVblankHandler, &gGameVblankQueue, (OSMesg) 1);
 
     // Point address to the entry point into the level script data.
     struct LevelCommand *addr = segmented_to_virtual(level_script_entry);
 
-    play_music(SEQ_PLAYER_SFX, SEQUENCE_ARGS(0, SEQ_SOUND_PLAYER), 0);
+    //play_music(SEQ_PLAYER_SFX, SEQUENCE_ARGS(0, SEQ_SOUND_PLAYER), 0);
     set_sound_mode(save_file_get_sound_mode());
 #ifdef WIDE
     gConfig.widescreen = save_file_get_widescreen_mode();
@@ -826,3 +832,4 @@ void thread5_game_loop(UNUSED void *arg) {
 #endif
     }
 }
+

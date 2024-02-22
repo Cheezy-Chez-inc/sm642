@@ -1686,7 +1686,6 @@ static void advance_cutscene_step(struct MarioState *m) {
 
 static void intro_cutscene_hide_hud_and_mario(struct MarioState *m) {
     gHudDisplay.flags = HUD_DISPLAY_NONE;
-    m->statusForCamera->cameraEvent = CAM_EVENT_START_INTRO;
     m->marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
     advance_cutscene_step(m);
 }

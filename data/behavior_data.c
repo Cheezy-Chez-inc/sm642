@@ -3471,6 +3471,26 @@ const BehaviorScript bhvMario[] = {
     END_LOOP(),
 };
 
+UNUSED static const u64 behavior_data_unused_2 = 2;
+const BehaviorScript bhvLuigi[] = {
+    BEGIN(OBJ_LIST_PLAYER),
+    SET_INT(oIntangibleTimer, 0),
+    SET_INTERACT_TYPE(INTERACT_IGLOO_BARRIER),
+    OR_LONG(oFlags, (OBJ_FLAG_PLAYER | OBJ_FLAG_SILHOUETTE)),
+    OR_INT(oUnk94, 0x0001),
+    SET_HITBOX(/*Radius*/ 37, /*Height*/ 160),
+    BEGIN_LOOP(),
+#ifdef VANILLA_DEBUG
+        CALL_NATIVE(try_print_debug_mario_level_info),
+#endif
+        CALL_NATIVE(bhv_mario_update),
+#ifdef VANILLA_DEBUG
+        CALL_NATIVE(try_do_mario_debug_object_spawn),
+#endif
+    END_LOOP(),
+};
+
+
 const BehaviorScript bhvToadMessage[] = {
     BEGIN(OBJ_LIST_GENACTOR),
     OR_INT(oFlags, (OBJ_FLAG_PERSISTENT_RESPAWN | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),

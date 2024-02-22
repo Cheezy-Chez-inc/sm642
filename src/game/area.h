@@ -108,7 +108,8 @@ enum WarpTransitionTypes {
     WARP_TRANSITION_TYPES_LARGE = 0x0E,
     WARP_TRANSITION_TYPE_MARIO  = 0x10,
     WARP_TRANSITION_TYPE_BOWSER = 0x12,
-    WARP_TRANSITION_TYPES_MASK  = 0x1E
+    WARP_TRANSITION_TYPES_MASK  = 0x1E,
+    WARP_TRANSITION_TYPE_SKULL  = 0xFF
 };
 
 
@@ -173,6 +174,7 @@ extern s16 gMenuOptSelectIndex;
 extern s16 gSaveOptSelectIndex;
 
 extern struct SpawnInfo *gMarioSpawnInfo;
+extern struct SpawnInfo *gLuigiSpawnInfo;
 
 extern struct Area *gAreas;
 extern struct Area *gCurrentArea;
@@ -190,6 +192,8 @@ void clear_area_graph_nodes(void);
 void load_area(s32 index);
 void unload_area(void);
 void load_mario_area(void);
+void load_player_area(u8 playerIndex);
+void load_luigi_area(void);
 void unload_mario_area(void);
 void change_area(s32 index);
 void area_update_objects(void);

@@ -6,6 +6,7 @@
 #include "gfx_dimensions.h"
 #include "behavior_data.h"
 #include "game_init.h"
+#include "audio/load.h"
 #include "object_list_processor.h"
 #include "engine/surface_load.h"
 #include "ingame_menu.h"
@@ -30,7 +31,7 @@
 #include "s2d_engine/init.h"
 #endif
 
-struct SpawnInfo gPlayerSpawnInfos[1];
+struct SpawnInfo gPlayerSpawnInfos[2];
 struct GraphNode *gGraphNodePointers[MODEL_ID_COUNT];
 struct Area gAreaData[AREA_COUNT];
 
@@ -44,6 +45,7 @@ s16 gMenuOptSelectIndex;
 s16 gSaveOptSelectIndex;
 
 struct SpawnInfo *gMarioSpawnInfo = &gPlayerSpawnInfos[0];
+struct SpawnInfo *gLuigiSpawnInfo = &gPlayerSpawnInfos[1];
 struct GraphNode **gLoadedGraphNodes = gGraphNodePointers;
 struct Area *gAreas = gAreaData;
 struct Area *gCurrentArea = NULL;
@@ -281,6 +283,38 @@ void load_mario_area(void) {
     }
 }
 
+void load_player_area(u8 playerIndex) {
+    
+if (gSoundMode == SOUND_MODE_MONO) {
+    stop_sounds_in_continuous_banks();
+    load_area(gMarioSpawnInfo->areaIndex);
+
+    if (gCurrentArea->index == gMarioSpawnInfo->areaIndex) {
+        gCurrentArea->flags |= 0x01;
+        spawn_objects_from_info(0, &gPlayerSpawnInfos[0]);
+    }
+}else{
+    stop_sounds_in_continuous_banks();
+    load_area(gMarioSpawnInfo->areaIndex);
+
+    if (gCurrentArea->index == gMarioSpawnInfo->areaIndex) {
+        gCurrentArea->flags |= 0x01;
+        spawn_objects_from_info(0, &gPlayerSpawnInfos[0]);
+        spawn_objects_from_info(0, &gPlayerSpawnInfos[1]);
+    } 
+}
+}
+
+void load_luigi_area(void) {
+    stop_sounds_in_continuous_banks();
+    load_area(gLuigiSpawnInfo->areaIndex);
+
+    if (gCurrentArea->index == gLuigiSpawnInfo->areaIndex) {
+        gCurrentArea->flags |= 0x01;
+        spawn_objects_from_info(0, gLuigiSpawnInfo);
+    }
+}
+
 void unload_mario_area(void) {
     if ((gCurrentArea != NULL) && (gCurrentArea->flags & AREA_FLAG_LOAD)) {
         unload_objects_from_area(0, gMarioSpawnInfo->activeAreaIndex);
@@ -301,10 +335,12 @@ void change_area(s32 index) {
 
         gCurrentArea->flags = areaFlags;
         gMarioObject->oActiveParticleFlags = ACTIVE_PARTICLE_NONE;
+        gLuigiObject->oActiveParticleFlags = ACTIVE_PARTICLE_NONE;
     }
 
     if (areaFlags & AREA_FLAG_LOAD) {
         gMarioObject->header.gfx.areaIndex = index, gMarioSpawnInfo->areaIndex = index;
+        gLuigiObject->header.gfx.areaIndex = index, gLuigiSpawnInfo->areaIndex = index;
     }
 }
 
@@ -331,13 +367,11 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
         red = gWarpTransRed, green = gWarpTransGreen, blue = gWarpTransBlue;
     }
 
-    if (transType & WARP_TRANSITION_TYPE_COLOR) {
+    if (transType < WARP_TRANSITION_TYPE_STAR) { // if transition is WARP_TRANSITION_TYPE_COLOR
         gWarpTransition.data.red = red;
         gWarpTransition.data.green = green;
         gWarpTransition.data.blue = blue;
     } else { // if transition is textured
-        set_and_reset_transition_fade_timer(0); // Reset transition timers by passing in 0 for time
-
         gWarpTransition.data.red = red;
         gWarpTransition.data.green = green;
         gWarpTransition.data.blue = blue;
@@ -355,8 +389,10 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
 
         s16 fullRadius = GFX_DIMENSIONS_FULL_RADIUS;
 
-#ifdef POLISHED_TRANSITIONS
+        // HackerSM64: this fixes the pop-in with texture transition, comment out this switch
+        // statement if you want to restore the original full radius.
         switch (transType){
+            case WARP_TRANSITION_TYPE_SKULL:
             case WARP_TRANSITION_TYPE_BOWSER:
             case WARP_TRANSITION_FADE_INTO_BOWSER:
                 fullRadius *= 4;
@@ -370,7 +406,6 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
                 fullRadius *= 1.5f;
             break;
         }
-#endif
 
         if (transType & WARP_TRANSITION_FADE_INTO) { // Is the image fading in?
             gWarpTransition.data.startTexRadius = fullRadius;
