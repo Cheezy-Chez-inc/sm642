@@ -1,5 +1,6 @@
 #include <PR/ultratypes.h>
 
+#include "mario_animation_ids.h"
 #include "sm64.h"
 #include "mario_actions_moving.h"
 #include "mario_actions_object.h"
@@ -1373,6 +1374,10 @@ void common_slide_action(struct MarioState *m, u32 endAction, u32 airAction, s32
             break;
 
         case GROUND_STEP_NONE:
+            if (animation == MARIO_ANIM_SLIDE) {
+                if (m->controller->stickY < -8.0f) animation = MARIO_ANIM_SLIDE_BRAKE;
+                if (m->controller->stickY >  8.0f) animation = MARIO_ANIM_SLIDE_ACCELERATION;
+            }
             set_mario_animation(m, animation);
             align_with_floor(m);
             m->particleFlags |= PARTICLE_DUST;
