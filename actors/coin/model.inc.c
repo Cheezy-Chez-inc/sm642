@@ -441,26 +441,6 @@ static const Vtx coin_seg3_vertex_red[] = {
 #endif
 
 // 0x03005780
-#ifdef IA8_COINS
-ALIGNED8 static const Texture coin_seg3_texture_front[] = {
-#include "actors/coin/coin_front.ia8.inc.c"
-};
-
-// 0x03005F80
-ALIGNED8 static const Texture coin_seg3_texture_tilt_right[] = {
-#include "actors/coin/coin_tilt_right.ia8.inc.c"
-};
-
-// 0x03006780
-ALIGNED8 static const Texture coin_seg3_texture_side[] = {
-#include "actors/coin/coin_side.ia8.inc.c"
-};
-
-// 0x03006F80
-ALIGNED8 static const Texture coin_seg3_texture_tilt_left[] = {
-#include "actors/coin/coin_tilt_left.ia8.inc.c"
-};
-#else
 ALIGNED8 static const Texture coin_seg3_texture_front[] = {
 #include "actors/coin/coin_front.ia16.inc.c"
 };
@@ -476,7 +456,19 @@ ALIGNED8 static const Texture coin_seg3_texture_side[] = {
 ALIGNED8 static const Texture coin_seg3_texture_tilt_left[] = {
 #include "actors/coin/coin_tilt_left.ia16.inc.c"
 };
-#endif
+
+ALIGNED8 static const Texture coin_line_seg3_texture_front[] = {
+#include "actors/coin/coin_line_front.ia16.inc.c"
+};
+
+ALIGNED8 static const Texture coin_line_seg3_texture_tilt_right[] = {
+#include "actors/coin/coin_line_right.ia16.inc.c"
+};
+
+ALIGNED8 static const Texture coin_line_seg3_texture_tilt_left[] = {
+#include "actors/coin/coin_line_left.ia16.inc.c"
+};
+
 
 // 0x03007780 - 0x030077D0
 const Gfx coin_seg3_sub_dl_begin[] = {
@@ -513,7 +505,7 @@ const Gfx coin_seg3_sub_dl_end[] = {
 // 0x03007800 - 0x03007828
 const Gfx coin_seg3_dl_yellow_front[] = {
     gsDPPipeSync(),
-    gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_16b, 1, coin_seg3_texture_front),
+    gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_16b, 1, coin_line_seg3_texture_front),
     gsSPDisplayList(coin_seg3_sub_dl_begin),
     gsSPVertex(coin_seg3_vertex_yellow, 4, 0),
     gsSPBranchList(coin_seg3_sub_dl_end),
@@ -522,7 +514,7 @@ const Gfx coin_seg3_dl_yellow_front[] = {
 // 0x03007828 - 0x03007850
 const Gfx coin_seg3_dl_yellow_tilt_right[] = {
     gsDPPipeSync(),
-    gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_16b, 1, coin_seg3_texture_tilt_right),
+    gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_16b, 1, coin_line_seg3_texture_tilt_right),
     gsSPDisplayList(coin_seg3_sub_dl_begin),
     gsSPVertex(coin_seg3_vertex_yellow, 4, 0),
     gsSPBranchList(coin_seg3_sub_dl_end),
@@ -540,7 +532,7 @@ const Gfx coin_seg3_dl_yellow_side[] = {
 // 0x03007878 - 0x030078A0
 const Gfx coin_seg3_dl_yellow_tilt_left[] = {
     gsDPPipeSync(),
-    gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_16b, 1, coin_seg3_texture_tilt_left),
+    gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_16b, 1, coin_line_seg3_texture_tilt_left),
     gsSPDisplayList(coin_seg3_sub_dl_begin),
     gsSPVertex(coin_seg3_vertex_yellow, 4, 0),
     gsSPBranchList(coin_seg3_sub_dl_end),

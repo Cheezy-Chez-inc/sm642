@@ -111,10 +111,35 @@ ALIGNED8 static const Texture title_texture_game_over_3[] = {
 #include "textures/title_screen_bg/title_screen_bg.05940.rgba16.inc.c"
 };
 
+// 0x0A0001C0
+ALIGNED8 static const Texture title_texture_1[] = {
+#include "textures/title_screen_bg/1.rgba16.inc.c"
+};
+
+// 0x0A0001C0
+ALIGNED8 static const Texture title_texture_2[] = {
+#include "textures/title_screen_bg/2.rgba16.inc.c"
+};
+
+// 0x0A0001C0
+ALIGNED8 static const Texture title_texture_3[] = {
+#include "textures/title_screen_bg/3.rgba16.inc.c"
+};
+
+// 0x0A0001C0
+ALIGNED8 static const Texture title_texture_4[] = {
+#include "textures/title_screen_bg/4.rgba16.inc.c"
+};
+
 // 0x0A0065C0
 const Texture *const mario_title_texture_table[] = {
     title_texture_title_0, title_texture_title_1, title_texture_title_2, title_texture_title_3,
 };
+
+const Texture *const mario_title_dd_texture_table[] = {
+    title_texture_1, title_texture_2, title_texture_3, title_texture_4,
+};
+
 
 // 0x0A0065D0
 const Texture *const game_over_texture_table[] = {

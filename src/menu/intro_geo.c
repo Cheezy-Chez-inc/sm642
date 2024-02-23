@@ -21,6 +21,7 @@
 // background types
 enum IntroBackgroundTypes {
     INTRO_BACKGROUND_SUPER_MARIO,
+    INTRO_BACKGROUND_DD,
     INTRO_BACKGROUND_GAME_OVER
 };
 
@@ -140,7 +141,7 @@ static float yCoords[] = {
 };
 
 // table that points to either the "Super Mario 64" or "Game Over" tables
-static const Texture *const *textureTables[] = { mario_title_texture_table, game_over_texture_table };
+static const Texture *const *textureTables[] = { mario_title_texture_table, mario_title_dd_texture_table, game_over_texture_table };
 
 /**
  * Generates a display list for a single background tile
@@ -169,10 +170,10 @@ static Gfx *intro_backdrop_one_image(s32 index, s8 *backgroundTable) {
 }
 
 static s8 introBackgroundIndexTable[] = {
-    INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO,
-    INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO,
-    INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO,
-    INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO,
+    INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_DD, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_DD, 
+    INTRO_BACKGROUND_DD, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_DD, INTRO_BACKGROUND_SUPER_MARIO, 
+    INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_DD, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_DD, 
+    INTRO_BACKGROUND_DD, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_DD, INTRO_BACKGROUND_SUPER_MARIO, 
 };
 
 // only one table of indexes listed

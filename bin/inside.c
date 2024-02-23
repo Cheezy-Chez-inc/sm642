@@ -5,12 +5,12 @@
 
 // 0x09000000
 ALIGNED8 const Texture inside_09000000[] = {
-#include "textures/inside/inside_castle_textures.00000.rgba16.inc.c"
+#include "textures/inside/custom_inside_castle_textures.00000.rgba16.inc.c"
 };
 
 // 0x09001000
 ALIGNED8 const Texture inside_09001000[] = {
-#include "textures/inside/inside_castle_textures.01000.rgba16.inc.c"
+#include "textures/inside/custom_inside_castle_textures.01000.rgba16.inc.c"
 };
 
 // 0x09002000
@@ -60,7 +60,7 @@ ALIGNED8 const Texture inside_09007000[] = {
 
 // 0x09008000
 ALIGNED8 const Texture inside_09008000[] = {
-#include "textures/inside/inside_castle_textures.08000.rgba16.inc.c"
+#include "textures/inside/custom_inside_castle_textures.08000.rgba16.inc.c"
 };
 
 // 0x09008800
@@ -85,5 +85,5 @@ ALIGNED8 const Texture inside_0900B000[] = {
 
 // 0x0900B800
 ALIGNED8 const Texture inside_0900B800[] = {
-#include "textures/inside/inside_castle_textures.0B800.rgba16.inc.c"
+#include "textures/inside/custom_inside_castle_textures.0B800.rgba16.inc.c"
 };
