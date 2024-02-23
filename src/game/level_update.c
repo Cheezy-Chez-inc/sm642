@@ -1,6 +1,7 @@
 #include <ultra64.h>
 
 #include "PR/os_libc.h"
+#include "PR/ultratypes.h"
 #include "sm64.h"
 #include "seq_ids.h"
 #include "dialog_ids.h"
@@ -942,7 +943,7 @@ void update_hud_values(void) {
 #ifdef BREATH_METER
         s16 numBreathWedges = gMarioState->breath > 0 ? gMarioState->breath >> 8 : 0;
 #endif
-        COND_BIT((gCurrCourseNum >= COURSE_MIN), gHudDisplay.flags, HUD_DISPLAY_FLAG_COIN_COUNT);
+        COND_BIT(TRUE, gHudDisplay.flags, HUD_DISPLAY_FLAG_COIN_COUNT);
 
         if (gHudDisplay.coins < gMarioState->numCoins) {
             if (gGlobalTimer & 1) {
