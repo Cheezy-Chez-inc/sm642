@@ -6111,3 +6111,14 @@ const BehaviorScript bhvRex[] = {
         CALL_NATIVE(bhv_rex_update),
     END_LOOP(),
 };
+
+const BehaviorScript bhvStoneBridge[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(stone_bridge_collision),
+    SET_HOME(),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_stone_bridge_update_pos),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};

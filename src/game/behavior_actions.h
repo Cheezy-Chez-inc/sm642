@@ -552,6 +552,7 @@ void bhv_yoshi_loop(void);
 void bhv_volcano_trap_loop(void);
 void bhv_rex_init(void);
 void bhv_rex_update(void);
+void bhv_stone_bridge_update_pos(void);
 
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
