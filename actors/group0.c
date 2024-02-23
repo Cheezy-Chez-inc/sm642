@@ -35,3 +35,5 @@
 #include "rex/model.inc.c"
 #include "rex/anims/data.inc.c"
 #include "rex/anims/table.inc.c"
+#include "stone_bridge/model.inc.c"
+#include "stone_bridge/collision.inc.c"

@@ -19,3 +19,4 @@
 
 #include "luigi/geo.inc.c"
 #include "rex/geo.inc.c"
+#include "stone_bridge/geo.inc.c"

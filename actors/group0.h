@@ -339,4 +339,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 
 #include "rex/anim_header.h"
+#include "stone_bridge/geo_header.h"
+
+#include "stone_bridge/collision_header.h"
+
 #endif
