@@ -4,7 +4,7 @@
 #include <PR/ultratypes.h>
 #include <PR/gbi.h>
 
-#define HUD_POWER_METER_X            140
+#define HUD_POWER_METER_X            16
 #define HUD_POWER_METER_EMPHASIZED_Y 166
 #define HUD_POWER_METER_Y            200
 #define HUD_POWER_METER_HIDDEN_Y     300
@@ -45,5 +45,7 @@ enum CameraHUDLUT {
 
 void set_hud_camera_status(s16 status);
 void render_hud(void);
+void hud_set_idle(u8 idle);
+void hud_force_idle();
 
 #endif // HUD_H

@@ -101,6 +101,13 @@ static struct PowerMeterHUD sPowerMeterHUD = {
 // when the power meter is hidden.
 s32 sPowerMeterVisibleTimer = 0;
 
+u8 gHudIdle = 0;
+s32 gHudIdleTimer = 0;
+s32 gHudForceIdle = 0;
+s32 gHudRedCoinTimer = 0;
+f32 gHudOffset = 0;
+f32 gHudRedCoinOffset = 0;
+
 #ifdef BREATH_METER
 static s16 sBreathMeterStoredValue;
 static struct PowerMeterHUD sBreathMeterHUD = {
@@ -283,18 +290,50 @@ void handle_power_meter_actions(s16 numHealthWedges) {
  * or has taken damage and has less than 8 health segments.
  * And calls a power meter animation function depending of the value defined.
  */
+f32 prevHurt = 0;
+f32 hurt = 0;
+f32 hurtTimer = 0;
+
+f32 map_value(f32 srcMin, f32 srcMax, f32 dstMin, f32 dstMax, f32 x) {
+    return (x - srcMin) / (srcMax - srcMin) * (dstMax - dstMin) + dstMin;
+}
+
 void render_hud_power_meter(void) {
     s16 shownHealthWedges = gHudDisplay.wedges;
-    if (sPowerMeterHUD.animation != POWER_METER_HIDING) handle_power_meter_actions(shownHealthWedges);
-    if (sPowerMeterHUD.animation == POWER_METER_HIDDEN) return;
-    switch (sPowerMeterHUD.animation) {
-        case POWER_METER_EMPHASIZED:    animate_power_meter_emphasized();    break;
-        case POWER_METER_DEEMPHASIZING: animate_power_meter_deemphasizing(); break;
-        case POWER_METER_HIDING:        animate_power_meter_hiding();        break;
-        default:                                                             break;
+    f32 powerMeterX, powerMeterY;
+    f32 srcX, srcY, dstX, dstY;
+    f32 interpolation, shakiness, range;
+    prevHurt = hurt;
+    hurt = gMarioState->hurtCounter;
+    if (hurtTimer != 0) {
+        hurtTimer--;
+        if (hurtTimer < 16 && gMarioState->health < 0x0300) hurtTimer = 16;
     }
+    if (hurt != 0 && prevHurt == 0) hurtTimer = 90;
+    powerMeterX = 42;
+    powerMeterY = SCREEN_HEIGHT - 32 - 10;
+    if (hurtTimer > 15) {
+        powerMeterX = SCREEN_WIDTH / 2.f - 28;
+        powerMeterY = SCREEN_HEIGHT / 2.f + 32;
+    }
+    else if (hurtTimer <= 15 && hurtTimer != 0) {
+        srcX = SCREEN_WIDTH / 2.f - 28;
+        srcY = SCREEN_HEIGHT / 2.f + 32;
+        dstX = powerMeterX;
+        dstY = powerMeterY;
+        interpolation = 1 - sqr(1 - map_value(15, 1, 0, 1, hurtTimer));
+        powerMeterX = map_value(0, 1, srcX, dstX, interpolation);
+        powerMeterY = map_value(0, 1, srcY, dstY, interpolation);
+    }
+    shakiness = gMarioState->hurtCounter + (gMarioState->healCounter / 2.f);
+    range = (s32)(shakiness * 3);
+    if (range > 0) {
+        powerMeterX = powerMeterX + (random_float() * (range + range) - range);
+        powerMeterY = powerMeterY + (random_float() * (range + range) - range);
+    }
+    sPowerMeterHUD.x = powerMeterX;
+    sPowerMeterHUD.y = powerMeterY;
     render_dl_power_meter(shownHealthWedges);
-    sPowerMeterVisibleTimer++;
 }
 
 #ifdef BREATH_METER
@@ -400,9 +439,9 @@ void render_hud_breath_meter(void) {
  * Renders the amount of lives Mario has.
  */
 void render_hud_mario_lives(void) {
-    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(22), HUD_TOP_Y, ","); // 'Mario Head' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(38), HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(54), HUD_TOP_Y, "%d", gHudDisplay.lives);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y, ","); // 'Mario Head' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y, "%d", gHudDisplay.lives);
 }
 
 #ifdef VANILLA_STYLE_CUSTOM_DEBUG
@@ -421,9 +460,9 @@ void render_debug_mode(void) {
  * Renders the amount of coins collected.
  */
 void render_hud_coins(void) {
-    print_text(HUD_COINS_X, HUD_TOP_Y, "$"); // 'Coin' glyph
-    print_text((HUD_COINS_X + 16), HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int((HUD_COINS_X + 30), HUD_TOP_Y, "%d", gHudDisplay.coins);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "$"); // 'Coin' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "%d", gHudDisplay.coins);
 }
 
 /**
@@ -432,11 +471,9 @@ void render_hud_coins(void) {
  */
 void render_hud_stars(void) {
     if (gHudFlash == HUD_FLASH_STARS && gGlobalTimer & 0x8) return;
-    s8 showX = (gHudDisplay.stars < 100);
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_STARS_X), HUD_TOP_Y, "^"); // 'Star' glyph
-    if (showX) print_text((GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_STARS_X) + 16), HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int((showX * 14) + GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_STARS_X - 16),
-                       HUD_TOP_Y, "%d", gHudDisplay.stars);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 20, "^"); // 'Star' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 20, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120,HUD_TOP_Y - 20, "%d", gHudDisplay.stars);
 }
 
 /**
@@ -444,10 +481,9 @@ void render_hud_stars(void) {
  * Leftover function from the beta version of the game.
  */
 void render_hud_keys(void) {
-    s16 i;
-
-    for (i = 0; i < gHudDisplay.keys; i++) {
-        print_text((i * 16) + 220, 142, "|"); // unused glyph - beta key
+    char* keys[] = { ".", "/" };
+    for (u8 i = 0; i < 3; i++) {
+        print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120 + i * 15, HUD_TOP_Y - 60, keys[i < gMarioState->numKeys]);
     }
 }
 
@@ -526,10 +562,22 @@ void render_hud_camera_status(void) {
             break;
     }
 
-    render_hud_tex_lut_big(0, y, (*cameraLUT)[GLYPH_CAM_P1]);
-
-
     gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
+}
+
+void render_hud_red_coins() {
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(8), 16 - (1 - gHudRedCoinOffset) * 120, "@"); // 'Coin' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(23), 16 - (1 - gHudRedCoinOffset) * 120, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(35), 16 - (1 - gHudRedCoinOffset) * 120, "%d", gRedCoinsCollected);
+}
+
+void hud_set_idle(u8 idle) {
+    gHudIdle = idle;
+}
+
+void hud_force_idle() {
+    gHudIdleTimer = MAX(15, gHudIdleTimer);
+    gHudForceIdle = 150;
 }
 
 /**
@@ -537,6 +585,21 @@ void render_hud_camera_status(void) {
  * excluding the cannon reticle which detects a camera preset for it.
  */
 void render_hud(void) {
+    if (gHudIdle || gHudForceIdle > 0) {
+        gHudIdleTimer++;
+        if (gHudIdleTimer > 60) gHudIdleTimer = 60;
+    }
+    else {
+        gHudIdleTimer--;
+        if (gHudIdleTimer < 0) gHudIdleTimer = 0;
+    }
+    if (gHudForceIdle > 0) gHudForceIdle--;
+    gHudOffset = (1 - (1 - gHudIdleTimer / 60.f) * (1 - gHudIdleTimer / 60.f));
+    if (gRedCoinsCollected > 0) {
+        gHudRedCoinTimer++;
+        if (gHudRedCoinTimer > 60) gHudRedCoinTimer = 60;
+        gHudRedCoinOffset = (1 - (1 - gHudRedCoinTimer / 60.f) * (1 - gHudRedCoinTimer / 60.f));
+    }
     s16 hudDisplayFlags = gHudDisplay.flags;
 
     if (hudDisplayFlags == HUD_DISPLAY_NONE) {
@@ -578,6 +641,7 @@ void render_hud(void) {
 
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_COIN_COUNT) {
             render_hud_coins();
+            render_hud_red_coins();
         }
 
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_STAR_COUNT) {

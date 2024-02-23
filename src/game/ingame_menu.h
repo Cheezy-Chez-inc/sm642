@@ -175,5 +175,6 @@ void do_cutscene_handler(void);
 void render_hud_cannon_reticle(void);
 void reset_red_coins_collected(void);
 s32 render_menus_and_dialogs(void);
+void print_animated_red_coin(s16 x, s16 y);
 
 #endif // INGAME_MENU_H
