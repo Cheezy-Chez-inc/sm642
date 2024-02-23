@@ -458,7 +458,7 @@
 #define MODEL_DIRT_ANIMATION              0x8A        // dirt_animation_geo
 #define MODEL_CARTOON_STAR                0x8B        // cartoon_star_geo
 #define MODEL_BLUE_COIN_SWITCH            0x8C        // blue_coin_switch_geo
-// find me
+#define MODEL_REX                         0x8D        // blue_coin_switch_geo
 #define MODEL_MIST                        0x8E        // mist_geo
 #define MODEL_SPARKLES_ANIMATION          0x8F        // sparkles_animation_geo
 #define MODEL_RED_FLAME                   0x90        // red_flame_geo
@@ -557,6 +557,9 @@
 #define MODEL_MAIN_MENU_YELLOW_FILE_BUTTON        MODEL_LEVEL_GEOMETRY_06   // main_menu_geo_0002E0
 #define MODEL_MAIN_MENU_GREEN_SCORE_BUTTON        MODEL_LEVEL_GEOMETRY_07   // main_menu_geo_000308
 #define MODEL_MAIN_MENU_MARIO_SAVE_BUTTON_FADE    MODEL_LEVEL_GEOMETRY_08   // main_menu_geo_000200
+#define MODEL_MAIN_MENU_WARIO_SAVE_BUTTON_FADE    MODEL_LEVEL_GEOMETRY_0D   // main_menu_geo_000200
+#define MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON_FADE    MODEL_LEVEL_GEOMETRY_0E   // main_menu_geo_000200
+#define MODEL_MAIN_MENU_WALUIGI_SAVE_BUTTON_FADE  MODEL_LEVEL_GEOMETRY_0F   // main_menu_geo_000200
 #define MODEL_MAIN_MENU_MARIO_NEW_BUTTON          MODEL_LEVEL_GEOMETRY_09   // main_menu_geo_000230
 #define MODEL_MAIN_MENU_MARIO_NEW_BUTTON_FADE     MODEL_LEVEL_GEOMETRY_0A   // main_menu_geo_000260
 #define MODEL_MAIN_MENU_PURPLE_SOUND_BUTTON       MODEL_LEVEL_GEOMETRY_0B   // main_menu_geo_000330

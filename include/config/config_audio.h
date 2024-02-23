@@ -1,5 +1,8 @@
 #pragma once
 
+
+
+
 /******************
  * AUDIO SETTINGS *
  ******************/
@@ -13,6 +16,12 @@
  * Red coins should use the unchanging JP sound effect.
  */
 // #define JP_RED_COIN_SOUND
+
+/**
+ * Allocate 6 additional SFX channels for general use. Sounds can be selectively distrubed across these channels in order to avoid sound overlapping conflicts.
+ * Also opens up free space to work with in 00_sound_banks.s. Likely doesn't hurt performance much beyond potentially having more notes playing at a time.
+ */
+#define EXTRA_SFX_CHANNEL_BANKS
 
 /** 
  * In vanilla, Mario's sounds are pitch shifted in real time in order to maintain a sense of consistency. This can be annoying when replacing Mario's sounds.
@@ -28,7 +37,7 @@
  * Because of this, the Headset sound option will also not appear in the file select menu with this disabled.
  * Leaving this disabled may also be slightly beneficial for CPU performance.
  */
-// #define ENABLE_STEREO_HEADSET_EFFECTS
+//#define ENABLE_STEREO_HEADSET_EFFECTS
 
 /**
  * Increase audio heap size to allow for larger/more custom sequences/banks/sfx to be imported without causing issues (not supported for SH).
@@ -49,4 +58,5 @@
  * Uses a much better implementation of reverb over vanilla's fake echo reverb. Great for caves or eerie levels, as well as just a better audio experience in general.
  * Reverb presets can be configured in audio/data.c to meet desired aesthetic/performance needs. More detailed usage info can also be found on the HackerSM64 Wiki page.
  */
-// #define BETTER_REVERB
+#define BETTER_REVERB
+

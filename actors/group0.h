@@ -335,4 +335,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "mario/geo_header.h"
 
+#include "rex/geo_header.h"
+
+
+#include "rex/anim_header.h"
 #endif

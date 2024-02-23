@@ -17,7 +17,6 @@
 #include "levels/bob/header.h"
 
 static const LevelScript script_func_local_1[] = {
-    OBJECT(/*model*/ MODEL_BOB_CHAIN_CHOMP_GATE,  /*pos*/  1456,   768,   446, /*angle*/ 0, 326, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvChainChompGate),
     OBJECT(/*model*/ MODEL_BOB_SEESAW_PLATFORM,   /*pos*/ -2303,   717,  1024, /*angle*/ 0, 45, 0,   /*behParam*/ 0x00030000, /*beh*/ bhvSeesawPlatform),
     OBJECT(/*model*/ MODEL_NONE,                  /*pos*/ -2050,     0, -3069, /*angle*/ 0, 25, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvOpenableGrill),
     OBJECT(/*model*/ MODEL_PURPLE_SWITCH,         /*pos*/ -2283,     0, -3682, /*angle*/ 0, 27, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvFloorSwitchGrills),
@@ -65,7 +64,8 @@ const LevelScript level_bob_entry[] = {
     LOAD_YAY0(        /*seg*/ 0x08, _common0_yay0SegmentRomStart, _common0_yay0SegmentRomEnd),
     LOAD_RAW(         /*seg*/ 0x0F, _common0_geoSegmentRomStart,  _common0_geoSegmentRomEnd),
     ALLOC_LEVEL_POOL(),
-    MARIO(/*model*/ MODEL_MARIO, /*behParam*/ 0x00000001, /*beh*/ bhvMario),
+    MARIO(/*model*/ MODEL_MARIO, /*behParam*/ 0x00000000, /*beh*/ bhvMario),
+    LUIGI(/*model*/ MODEL_LUIGI, /*behParam*/ 0x00000001, /*beh*/ bhvLuigi),
     JUMP_LINK(script_func_global_1),
     JUMP_LINK(script_func_global_4),
     JUMP_LINK(script_func_global_15),
@@ -99,6 +99,7 @@ const LevelScript level_bob_entry[] = {
 
     FREE_LEVEL_POOL(),
     MARIO_POS(/*area*/ 1, /*yaw*/ 135, /*pos*/ -6558, 0, 6464),
+    LUIGI_POS(/*area*/ 1, /*yaw*/ 135, /*pos*/ -6558, 0, 6464),
     CALL(/*arg*/ 0, /*func*/ lvl_init_or_update),
     CALL_LOOP(/*arg*/ 1, /*func*/ lvl_init_or_update),
     CLEAR_LEVEL(),

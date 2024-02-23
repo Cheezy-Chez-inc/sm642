@@ -262,18 +262,34 @@ void spawn_particle(u32 activeParticleFlag, ModelID16 model, const BehaviorScrip
     }
 }
 
+
 /**
  * Mario's primary behavior update function.
  */
 void bhv_mario_update(void) {
     u32 particleFlags = 0;
     s32 i;
+
+    
+    set_character_sound();
+
     
     gMarioState = &gMarioStates[gCurrentObject->oBehParams & 0xFF];
     gMarioState->marioObj = gCurrentObject;
 
     particleFlags = execute_mario_action(gCurrentObject);
     gCurrentObject->oMarioParticleFlags = particleFlags;
+
+    switch (gMarioState->playerModel) {
+        case 0: cur_obj_set_model(MODEL_MARIO);
+         break;
+        case 1: cur_obj_set_model(MODEL_LUIGI); 
+        break;
+        case 2: cur_obj_set_model(MODEL_NONE); 
+        break;
+        case 3: cur_obj_set_model(MODEL_NONE); 
+        break;
+    }
 
     // Mario code updates MarioState's versions of position etc, so we need
     // to sync it with the Mario object
@@ -287,19 +303,6 @@ void bhv_mario_update(void) {
         }
 
         i++;
-    }
-
-    if (gMarioState->controller->buttonPressed & L_TRIG) {
-        gMarioState->currentCharacter++;
-        gMarioState->currentCharacter %= 2;
-        switch (gMarioState->currentCharacter) {
-            case 0:
-                cur_obj_set_model(MODEL_MARIO);
-                break;
-            case 1:
-                cur_obj_set_model(MODEL_LUIGI);
-                break;
-        }
     }
 }
 

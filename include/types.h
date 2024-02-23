@@ -467,7 +467,7 @@ struct MarioState {
     /*0xBC*/ f32 peakHeight;
     /*0xC0*/ f32 quicksandDepth;
     /*0xC4*/ f32 windGravity;
-    u8 currentCharacter;
+    u8 playerModel;
     // -- HackerSM64 MarioState fields begin --
 #ifdef BREATH_METER
              s16 breath;

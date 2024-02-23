@@ -170,9 +170,7 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvFlyGuy,                         MODEL_FLYGUY,                       0}, // macro_fly_guy
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_155
     {bhvWigglerHead,                    MODEL_WIGGLER_HEAD,                 0}, // macro_wiggler - unused
-    {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_157
-    {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_158
-    {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_159
+    {bhvRex,                            MODEL_REX,                          0}, // macro_empty_159
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_160
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_161
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_162

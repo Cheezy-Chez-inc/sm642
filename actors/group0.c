@@ -32,3 +32,6 @@
 #endif
 
 #include "luigi/model.inc.c"
+#include "rex/model.inc.c"
+#include "rex/anims/data.inc.c"
+#include "rex/anims/table.inc.c"

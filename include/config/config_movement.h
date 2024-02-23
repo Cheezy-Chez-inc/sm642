@@ -41,7 +41,7 @@
 /**
  * Disables fall damage.
  */
-#define NO_FALL_DAMAGE
+//#define NO_FALL_DAMAGE
 
 /**
  * Disables the scream that mario makes when falling off a great height (this is separate from actual fall damage).
@@ -76,7 +76,7 @@
 /**
  * Uses Shindou's pole behavior.
  */
-// #define SHINDOU_POLES
+#define SHINDOU_POLES
 
 /**
  * If A and Z are pressed on the same frame while running, Mario will long jump instead of ground pound.
@@ -116,7 +116,7 @@
 /**
  * Disables BLJs and crushes SimpleFlips's dreams.
  */
-// #define DISABLE_BLJ
+#define DISABLE_BLJ
 
 /**
  * Re-enables upwarping when entering water. Forces you to only enter water from the top.
@@ -141,4 +141,4 @@
  * These require Platform Displacement 2 to be enabled.
  */
 #define MARIO_INERTIA_UPWARD
-// #define MARIO_INERTIA_LATERAL
+#define MARIO_INERTIA_LATERAL

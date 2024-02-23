@@ -94,6 +94,10 @@ u8 gLevelSelectHoldKeyTimer = 0;
  */
 s32 intro_level_select(void) {
     u32 index = 0;
+gMarioStates[0].playerModel = 0; // mario
+gMarioStates[1].playerModel = 1; // luigi
+gMarioStates[0].animList = &gMarioAnimsBuf;
+gMarioStates[1].animList = &gLuigiAnimsBuf;
     if (gPlayer1Controller->rawStickY < -60
         || gPlayer1Controller->rawStickX < -60
         || gPlayer1Controller->buttonDown & (D_CBUTTONS | D_JPAD | L_CBUTTONS | L_JPAD)

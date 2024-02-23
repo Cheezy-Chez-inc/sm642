@@ -14,10 +14,6 @@
  */
 // #define DISABLE_ALL
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 /**
  * Enables a comprehensive standalone profiler. Automatically enabled by PUPPYPRINT_DEBUG.
  * If not using PUPPYPRINT_DEBUG, press L + D-Pad Up to toggle the profiler.
@@ -45,12 +41,12 @@
 /**
  * Enables a custom, enhanced performance profiler. (Enables PUPPYPRINT by default in config_safeguards).
  */
-// #define PUPPYPRINT_DEBUG
+ #define PUPPYPRINT_DEBUG
 
 /**
  * Uses cycles instead of microseconds in Puppyprint debug output.
  */
-// #define PUPPYPRINT_DEBUG_CYCLES
+//#define PUPPYPRINT_DEBUG_CYCLES
 
 /**
  * A vanilla style debug mode. It doesn't rely on a text engine, but it's much less powerful that PUPPYPRINT_DEBUG.
@@ -73,7 +69,7 @@
  * Same as above, but also reads all save file flags as complete.
  * This will not overwrite existing save file data unless you save over it.
  */
-// #define COMPLETE_SAVE_FILE
+#define COMPLETE_SAVE_FILE
 
 /**
  * Removes the limit on FPS.
@@ -89,8 +85,3 @@
  * Forces a crash when the game starts. Useful for debugging the crash screen.
  */
 // #define DEBUG_FORCE_CRASH_ON_BOOT
-
-/**
- * Intentionally crash the game whenever a runtime assertion fails (also invoked by the DEBUG define in the Makefile).
- */
-#define DEBUG_ASSERTIONS
