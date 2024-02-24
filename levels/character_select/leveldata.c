@@ -1,14 +1,14 @@
-#include <PR/ultratypes.h>
-#include <PR/gbi.h>
-
-#include "macros.h"
+#include <ultra64.h>"
+#include "sm64.h"
 #include "surface_terrains.h"
-#include "types.h"
+#include "moving_texture_macros.h"
+#include "level_misc_macros.h"
+#include "macro_preset_names.h"
+#include "special_preset_names.h"
+#include "textures.h"
+#include "dialog_ids.h"
 
-#ifdef VERSION_EU
-#include "text_strings.h"
-#endif
 #include "make_const_nonconst.h"
 
-#include "levels/character_select/model.inc.c"
-#include "levels/character_select/spotlight/model.inc.c"
+
+#include "levels/character_select/leveldata.inc.c"
