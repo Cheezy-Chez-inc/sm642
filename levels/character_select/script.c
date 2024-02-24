@@ -25,7 +25,8 @@ const LevelScript level_character_select_entry[] = {
 	INIT_LEVEL(),
 	LOAD_MIO0(0x7, _character_select_segment_7SegmentRomStart, _character_select_segment_7SegmentRomEnd), 
 	ALLOC_LEVEL_POOL(),
-	MARIO(MODEL_MARIO, 0x00000001, bhvMario),
+	MARIO(MODEL_MARIO, 0x00000000, bhvMario),
+	LUIGI(MODEL_MARIO, 0x00000001, bhvLuigi),
 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
@@ -41,6 +42,7 @@ const LevelScript level_character_select_entry[] = {
 
 	FREE_LEVEL_POOL(),
 	MARIO_POS(1, 0, 0, 0, 0),
+	LUIGI_POS(1, 0, 0, 0, 0),
 	CALL(0, lvl_init_or_update),
 	CALL_LOOP(1, lvl_init_or_update),
 	CLEAR_LEVEL(),
