@@ -670,20 +670,18 @@ void initiate_warp(s16 destLevel, s16 destArea, s16 destWarpNode, s32 warpFlags)
  * Check if Mario is above and close to a painting warp floor, and return the
  * corresponding warp node.
  */
-struct WarpNode *get_painting_warp_node(u8* marioIndex) {
-    for (u8 i = 0; i < 2; i++) {
-        s32 paintingIndex = gMarioStates[i].floor->type - SURFACE_PAINTING_WARP_D3;
+struct WarpNode *get_painting_warp_node(void) {
+    struct WarpNode *warpNode = NULL;
+    s32 paintingIndex = gMarioState->floor->type - SURFACE_PAINTING_WARP_D3;
 
-        if (paintingIndex >= PAINTING_WARP_INDEX_START && paintingIndex < PAINTING_WARP_INDEX_END) {
-            if (paintingIndex < PAINTING_WARP_INDEX_FA
-                || gMarioStates[i].pos[1] - gMarioStates[i].floorHeight < 80.0f) {
-                *marioIndex = i;
-                return &gCurrentArea->paintingWarpNodes[paintingIndex];
-            }
+    if (paintingIndex >= PAINTING_WARP_INDEX_START && paintingIndex < PAINTING_WARP_INDEX_END) {
+        if (paintingIndex < PAINTING_WARP_INDEX_FA
+            || gMarioState->pos[1] - gMarioState->floorHeight < 80.0f) {
+            warpNode = &gCurrentArea->paintingWarpNodes[paintingIndex];
         }
     }
 
-    return NULL;
+    return warpNode;
 }
 
 /**
@@ -692,11 +690,10 @@ struct WarpNode *get_painting_warp_node(u8* marioIndex) {
 void initiate_painting_warp(void) {
     if (gCurrentArea->paintingWarpNodes != NULL && gMarioState->floor != NULL) {
         struct WarpNode warpNode;
-        u8 marioIndex;
-        struct WarpNode *pWarpNode = get_painting_warp_node(&marioIndex);
+        struct WarpNode *pWarpNode = get_painting_warp_node();
 
         if (pWarpNode != NULL) {
-            if (gMarioStates[marioIndex].action & ACT_FLAG_INTANGIBLE) {
+            if (gMarioState->action & ACT_FLAG_INTANGIBLE) {
                 play_painting_eject_sound();
             } else if (pWarpNode->id != 0) {
                 warpNode = *pWarpNode;
@@ -713,9 +710,9 @@ void initiate_painting_warp(void) {
                 play_transition_after_delay(WARP_TRANSITION_FADE_INTO_COLOR, 30, 255, 255, 255, 45);
                 level_set_transition(74, basic_update);
 
-                set_mario_action(&gMarioStates[marioIndex], ACT_DISAPPEARED, 0);
+                set_mario_action(gMarioState, ACT_DISAPPEARED, 0);
 
-                gMarioStates[marioIndex].marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
+                gMarioState->marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
 
                 play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
                 fadeout_music(398);
