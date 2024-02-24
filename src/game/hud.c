@@ -449,13 +449,13 @@ void render_hud_breath_meter(void) {
  * Renders the amount of lives Mario has.
  */
 void render_hud_mario_lives(void) {
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 200, HUD_TOP_Y, ","); // 'Mario Head' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 200, HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 200, HUD_TOP_Y, "%d", gHudDisplay.lives);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y, ","); // 'Mario Head' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y, "%d", gHudDisplay.lives);
 if(gSoundMode == SOUND_MODE_STEREO){
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 200, HUD_TOP_Y - 20, "+"); // 'Luigi Head' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 200, HUD_TOP_Y - 20, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 200, HUD_TOP_Y - 20, "%d", gHudDisplay.Llives);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 80, "+"); // 'Luigi Head' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 80, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y - 80, "%d", gHudDisplay.Llives);
 }
 }
 
@@ -475,9 +475,9 @@ void render_debug_mode(void) {
  * Renders the amount of coins collected.
  */
 void render_hud_coins(void) {
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 200, HUD_TOP_Y - 40 - 20 , "$"); // 'Coin' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 200, HUD_TOP_Y - 40 - 20, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 200, HUD_TOP_Y  - 20 - 20, "%d", gHudDisplay.coins);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "$"); // 'Coin' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "%d", gHudDisplay.coins);
 }
 
 /**
@@ -486,9 +486,9 @@ void render_hud_coins(void) {
  */
 void render_hud_stars(void) {
     if (gHudFlash == HUD_FLASH_STARS && gGlobalTimer & 0x8) return;
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 200, HUD_TOP_Y - 20 - 20, "^"); // 'Star' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 200, HUD_TOP_Y - 20 - 20, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 200,HUD_TOP_Y - 20 - 20, "%d", gHudDisplay.stars);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 20, "^"); // 'Star' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 20, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120,HUD_TOP_Y - 20, "%d", gHudDisplay.stars);
 }
 
 /**
@@ -498,7 +498,7 @@ void render_hud_stars(void) {
 void render_hud_keys(void) {
     char* keys[] = { ".", "/" };
     for (u8 i = 0; i < 3; i++) {
-        print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 200 + i * 15, HUD_TOP_Y - 60 - 20, keys[i < gMarioState->numKeys]);
+        print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120 + i * 15, HUD_TOP_Y - 60, keys[i < gMarioState->numKeys]);
     }
 }
 
@@ -581,9 +581,9 @@ void render_hud_camera_status(void) {
 }
 
 void render_hud_red_coins() {
-    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(8), 16 - (1 - gHudRedCoinOffset) * 200, "@"); // 'Coin' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(23), 16 - (1 - gHudRedCoinOffset) * 200, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(35), 16 - (1 - gHudRedCoinOffset) * 200, "%d", gRedCoinsCollected);
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(8), 16 - (1 - gHudRedCoinOffset) * 120, "@"); // 'Coin' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(23), 16 - (1 - gHudRedCoinOffset) * 120, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(35), 16 - (1 - gHudRedCoinOffset) * 120, "%d", gRedCoinsCollected);
 }
 
 void hud_set_idle(u8 idle) {
