@@ -120,6 +120,7 @@ struct HudDisplay {
 #ifdef BREATH_METER
              u16 breath;
 #endif
+    /*0x00*/ s16 Llives;
 };
 
 extern struct HudDisplay gHudDisplay;

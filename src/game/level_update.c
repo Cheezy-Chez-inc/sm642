@@ -768,6 +768,9 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 if (m->numLives == 0) {
                     sDelayedWarpOp = WARP_OP_GAME_OVER;
                 }
+                if (m->LuigiNumLives == 0) {
+                    sDelayedWarpOp = WARP_OP_GAME_OVER;
+                }
 #endif
                 sDelayedWarpTimer = 48;
                 sSourceWarpNodeId = WARP_NODE_DEATH;
@@ -786,6 +789,11 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     if (area_get_warp_node(sSourceWarpNodeId) == NULL) {
 #ifdef ENABLE_LIVES
                         if (m->numLives == 0) {
+                            sDelayedWarpOp = WARP_OP_GAME_OVER;
+                        } else {
+                            sSourceWarpNodeId = WARP_NODE_DEATH;
+                        }
+                        if (m->LuigiNumLives == 0) {
                             sDelayedWarpOp = WARP_OP_GAME_OVER;
                         } else {
                             sSourceWarpNodeId = WARP_NODE_DEATH;
@@ -963,6 +971,9 @@ void update_hud_values(void) {
         if (gMarioState->numLives > MAX_NUM_LIVES) {
             gMarioState->numLives = MAX_NUM_LIVES;
         }
+        if (gLuigiState->LuigiNumLives > MAX_NUM_LIVES) {
+            gLuigiState->LuigiNumLives = MAX_NUM_LIVES;
+        }
 #endif
 
         if (gMarioState->numCoins > MAX_NUM_COINS) {
@@ -974,7 +985,8 @@ void update_hud_values(void) {
         }
 
         gHudDisplay.stars = gMarioState->numStars;
-        gHudDisplay.lives = gMarioState->numLives;
+        gHudDisplay.lives  = gMarioState->LuigiNumLives;
+        gHudDisplay.Llives = gLuigiState->LuigiNumLives;
         gHudDisplay.keys = gMarioState->numKeys;
 
         if (numHealthWedges > gHudDisplay.wedges) {

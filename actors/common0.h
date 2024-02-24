@@ -197,4 +197,8 @@ extern const Collision unknown_seg8_collision_080262F8[];
 
 #include "goomba/geo_header.h"
 
+#include "black_bobomb/geo_header.h"
+
+#include "bobomb/geo_header.h"
+
 #endif

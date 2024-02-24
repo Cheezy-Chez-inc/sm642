@@ -1889,16 +1889,9 @@ void init_mario_from_save_file(void) {
     gMarioState->numCoins = 0;
     gMarioState->numStars = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
     gMarioState->numKeys = 0;
-#ifdef ENABLE_LIVES
-    gMarioState->numLives = ENABLE_LIVES;
-#else
-    gMarioState->numLives = 0;
-#endif
+    gMarioState[0].numLives = 6;
     gMarioState->health = 0x880;
-#ifdef BREATH_METER
     gMarioState->breath = 0x880;
-    gHudDisplay.breath = 8;
-#endif
     gMarioState->prevNumStarsForDialog = gMarioState->numStars;
     gMarioState->animYTrans = 0xBD;
 

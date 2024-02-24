@@ -156,6 +156,7 @@ void yoshi_give_present_loop(void) {
     if (!(globalTimer & 3)) {
         play_sound(SOUND_MENU_YOSHI_GAIN_LIVES, gGlobalSoundSource);
         gMarioState->numLives++;
+        gMarioState->LuigiNumLives++;
     }
 #else
     play_sound(SOUND_GENERAL_COLLECT_1UP, gGlobalSoundSource);

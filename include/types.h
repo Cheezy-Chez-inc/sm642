@@ -485,6 +485,7 @@ struct MarioState {
              s16 ceilYaw;
              s16 wallYaw;
     // -- HackerSM64 MarioState fields end --
+    /*0xAD*/ s8 LuigiNumLives;
 };
 
 #endif // TYPES_H

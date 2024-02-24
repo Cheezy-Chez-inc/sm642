@@ -108,16 +108,9 @@ void init_luigi_from_save_file(void) {
     gLuigiState->numCoins = 0;
     gLuigiState->numStars = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
     gLuigiState->numKeys = 0;
-#ifdef ENABLE_LIVES
-    gLuigiState->numLives = ENABLE_LIVES;
-#else
-    gLuigiState->numLives = 0;
-#endif
+    gMarioState[1].LuigiNumLives = 6;
     gLuigiState->health = 0x880;
-#ifdef BREATH_METER
-    gLuigiState->breath = 0x880;
     gHudDisplay.breath = 8;
-#endif
     gLuigiState->prevNumStarsForDialog = gLuigiState->numStars;
     gLuigiState->animYTrans = 0xBD;
 

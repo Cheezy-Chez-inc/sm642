@@ -16,6 +16,11 @@
 #define ENABLE_LIVES 6
 
 /**
+ * Enable lives and the lives counter. The number next to the define is the number of lives you start with.
+ */
+#define ENABLE_LIVES_P2 6
+
+/**
  * This can be 0..127.
  */
 #define MAX_NUM_LIVES 100

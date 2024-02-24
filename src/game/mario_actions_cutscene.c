@@ -1185,6 +1185,7 @@ s32 act_death_exit(struct MarioState *m) {
 #endif
 #ifdef ENABLE_LIVES
         m->numLives--;
+        m->LuigiNumLives--;
 #endif
         // restore 7.75 units of health
         m->healCounter = 31;
@@ -1202,6 +1203,7 @@ s32 act_unused_death_exit(struct MarioState *m) {
         play_sound(SOUND_CHARACTER_OOOF2, m->marioObj->header.gfx.cameraToObject);
 #ifdef ENABLE_LIVES
         m->numLives--;
+        m->LuigiNumLives--;
 #endif
         // restore 7.75 units of health
         m->healCounter = 31;
@@ -1222,6 +1224,7 @@ s32 act_falling_death_exit(struct MarioState *m) {
 #endif
 #ifdef ENABLE_LIVES
         m->numLives--;
+        m->LuigiNumLives--;
 #endif
         // restore 7.75 units of health
         m->healCounter = 31;
@@ -1277,6 +1280,7 @@ s32 act_special_death_exit(struct MarioState *m) {
 #endif
 #ifdef ENABLE_LIVES
         m->numLives--;
+        m->LuigiNumLives--;
 #endif
         m->healCounter = 31;
     }
