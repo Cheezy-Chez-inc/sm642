@@ -31,6 +31,7 @@
 
 #include "levels/menu/header.h"
 #include "levels/intro/header.h"
+#include "levels/character_select/header.h"
 
 #include "level_headers.h"
 
@@ -150,6 +151,10 @@ static const LevelScript goto_mario_head_dizzy[] = {
 
 static const LevelScript goto_debug_level_select[] = {
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_level_select, _introSegmentBssStart, _introSegmentBssEnd),
+};
+
+static const LevelScript goto_character_select[] = {
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_CHAR_SELECT, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_level_select, _introSegmentBssStart, _introSegmentBssEnd),
 };
 
 // Include the level jumptable.
