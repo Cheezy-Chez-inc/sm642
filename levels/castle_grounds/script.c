@@ -97,7 +97,6 @@ const LevelScript level_castle_grounds_entry[] = {
 		OBJECT( MODEL_EXCLAMATION_BOX, -13, 3476, -5646, 180, 0, 0,   0x00000000, bhvExclamationBox),
 		OBJECT( MODEL_CASTLE_GROUNDS_CANNON_GRILL, 0, 0, 0, 180, 0, 0,   0x00000000, bhvHiddenAt120Stars),
 		OBJECT( MODEL_NONE, 1328, 260, 4664, 0, 0, -180,   0x00280000, bhvIntroScene),
-		OBJECT( MODEL_NONE, 0, 0, 0, 180, 0, 0,   0x00000000, bhvInvisibleObjectsUnderBridge),
 		OBJECT( MODEL_NONE, 3379, -500, -2025, 0, 0, -180,   0x00060000, bhvLaunchDeathWarp),
 		OBJECT( MODEL_NONE, 3379, -500, -2025, 0, 0, -180,   0x00080000, bhvLaunchStarCollectWarp),
 		OBJECT( MODEL_CASTLE_GROUNDS_VCUTM_GRILL, 0, 0, 0, 180, 0, 0,   0x00000000, bhvMoatGrills),
