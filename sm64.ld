@@ -448,6 +448,26 @@ SECTIONS
 
    gMainLevels = __romPos;
 
+
+
+
+
+   BEGIN_SEG(character_select, 0x14000000)
+   {
+      KEEP(BUILD_DIR/levels/character_select/script.o(.data*));
+      KEEP(BUILD_DIR/levels/character_select/geo.o(.data*));
+   }
+   END_SEG(character_select)
+   BEGIN_SEG(character_select_segment_7, 0x07000000)
+   {
+      KEEP(BUILD_DIR/levels/character_select/leveldata.szp.o(.data*));
+      . = ALIGN(0x10);
+   }
+   END_SEG(character_select_segment_7)
+
+
+
+
    BEGIN_SEG(menu, 0x14000000)
    {
       KEEP(BUILD_DIR/levels/menu/script.o(.data*));

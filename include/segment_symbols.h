@@ -65,6 +65,7 @@ extern u8 _buffersSegmentBssStart[];
 extern u8 _buffersSegmentBssEnd[];
 
 DECLARE_LEVEL_SEGMENT(menu)
+DECLARE_LEVEL_SEGMENT(character_select)
 DECLARE_LEVEL_SEGMENT(intro)
 DECLARE_LEVEL_SEGMENT(ending)
 

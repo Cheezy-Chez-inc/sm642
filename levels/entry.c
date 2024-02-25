@@ -4,6 +4,7 @@
 #include "level_commands.h"
 
 #include "levels/intro/header.h"
+#include "levels/character_select/header.h"
 
 #include "make_const_nonconst.h"
 
