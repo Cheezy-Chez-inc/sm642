@@ -335,7 +335,7 @@ void render_hud_power_meter(void) {
         powerMeterX = map_value(0, 1, srcX, dstX, interpolation);
         powerMeterY = map_value(0, 1, srcY, dstY, interpolation);
     }
-    shakiness = gMarioState->hurtCounter + (gMarioState->healCounter / 2.f);
+    shakiness = gMarioState->hurtCounter;
     range = (s32)(shakiness * 3);
     if (range > 0) {
         powerMeterX = powerMeterX + (random_float() * (range + range) - range);
