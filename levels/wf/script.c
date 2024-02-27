@@ -163,7 +163,7 @@ const LevelScript level_wf_entry[] = {
 
     FREE_LEVEL_POOL(),
     MARIO_POS(/*area*/ 1, /*yaw*/ 90, /*pos*/ 2600, 256, 5120),
-    LUIGI_POS(/*area*/ 1, /*yaw*/ 90, /*pos*/ 2900, 256, 5120),
+    LUIGI_POS(/*area*/ 1, /*yaw*/ 90, /*pos*/ 2600, 256, 5120),
     CALL(/*arg*/ 0, /*func*/ lvl_init_or_update),
     CALL_LOOP(/*arg*/ 1, /*func*/ lvl_init_or_update),
     CLEAR_LEVEL(),

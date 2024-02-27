@@ -320,7 +320,7 @@ void render_hud_power_meter(void) {
         if (hurtTimer < 16 && gMarioState->health < 0x0300) hurtTimer = 16;
     }
     if (hurt != 0 && prevHurt == 0) hurtTimer = 90;
-    powerMeterX = 42;
+    powerMeterX = SCREEN_CENTER_X;
     powerMeterY = SCREEN_HEIGHT - 32 - 10;
     if (hurtTimer > 15) {
         powerMeterX = SCREEN_WIDTH / 2.f - 28;
@@ -449,13 +449,18 @@ void render_hud_breath_meter(void) {
  * Renders the amount of lives Mario has.
  */
 void render_hud_mario_lives(void) {
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y, ","); // 'Mario Head' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y, "%d", gHudDisplay.lives);
+if(gSoundMode == SOUND_MODE_MONO){
+    print_text(SCREEN_CENTER_X - 15 - 7, HUD_TOP_Y - 60, ","); // 'Mario Head' glyph
+    print_text(SCREEN_CENTER_X - 7, HUD_TOP_Y - 60, "*"); // 'X' glyph
+    print_text_fmt_int(SCREEN_CENTER_X + 15 - 7, HUD_TOP_Y - 60, "%d", gHudDisplay.lives);
+}
 if(gSoundMode == SOUND_MODE_STEREO){
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 80, "+"); // 'Luigi Head' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 80, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y - 80, "%d", gHudDisplay.Llives);
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(20) - (1 - gHudOffset) * 120, HUD_TOP_Y, ","); // 'Mario Head' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(36) - (1 - gHudOffset) * 120, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(51) - (1 - gHudOffset) * 120, HUD_TOP_Y, "%d", gHudDisplay.lives);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y, "+"); // 'Luigi Head' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(40) + (1 - gHudOffset) * 120, HUD_TOP_Y, "%d", gHudDisplay.Llives);
 }
 }
 
@@ -475,9 +480,9 @@ void render_debug_mode(void) {
  * Renders the amount of coins collected.
  */
 void render_hud_coins(void) {
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "$"); // 'Coin' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120, HUD_TOP_Y - 40, "%d", gHudDisplay.coins);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(132) - 4 , HUD_TOP_Y, "$"); // 'Coin' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(119) - 2, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(103) -4, HUD_TOP_Y, "%d", gHudDisplay.coins);
 }
 
 /**
@@ -486,9 +491,9 @@ void render_hud_coins(void) {
  */
 void render_hud_stars(void) {
     if (gHudFlash == HUD_FLASH_STARS && gGlobalTimer & 0x8) return;
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y - 20, "^"); // 'Star' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y - 20, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44) + (1 - gHudOffset) * 120,HUD_TOP_Y - 20, "%d", gHudDisplay.stars);
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(100) - 10, HUD_TOP_Y, "^"); // 'Star' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(116) - 10, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(129) - 10,HUD_TOP_Y, "%d", gHudDisplay.stars);
 }
 
 /**
@@ -663,9 +668,6 @@ void render_hud(void) {
             render_hud_stars();
         }
 
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_KEYS) {
-            render_hud_keys();
-        }
 
 #ifdef BREATH_METER
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_BREATH_METER) render_hud_breath_meter();
