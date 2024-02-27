@@ -17,6 +17,8 @@
 #include "sparkle_animation/geo.inc.c"
 #include "mario/geo.inc.c"
 
-#include "luigi/geo.inc.c"
 #include "rex/geo.inc.c"
 #include "stone_bridge/geo.inc.c"
+#include "toad_player/geo.inc.c"
+#include "peach_player/geo.inc.c"
+#include "luigi/geo.inc.c"

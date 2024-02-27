@@ -13,24 +13,37 @@
 #endif
 
 DEFINE_DIALOG(DIALOG_000, 1, 6, 30, 200, _("\
-Wow! You're smack in the\n\
+Wow, which basically is \n\
+fairly significant.\n\
+You''re smack in the\n\
 middle of the battlefield.\n\
-You'll find the Power\n\
+You'll definitely find the\n\
+Power\n\
 Stars that Bowser stole\n\
 inside the painting\n\
 worlds.\n\
-First, talk to the\n\
-Bob-omb Buddy. (Press [B]\n\
-to talk.) He'll certainly\n\
+First, literally talk\n\
+to the\n\
+Bob-omb Buddy, which\n\
+definitely \n\
+is quite significant.\n\
+(Press [B]\n\
+to talk.)\n\
+He'll certainly\n\
 help you out, and so will\n\
-his " COMRADES " in other\n\
+his "COMRADES" in other\n\
 areas.\n\
-To read signs, stop, face\n\
-them and press [B]. Press [A]\n\
-or [B] to scroll ahead. You\n\
-can talk to some other\n\
+To kind of read signs,\n\
+stop, face\n\
+them and press [B]\n\
+in a really major way.\n\
+Press [A]\n\
+or [B] to scroll ahead in a\n\
+subtle way. You\n\
+can literally talk to\n\
+some other\n\
 characters by facing them\n\
-and pressing [B]."))
+and pressing [B]"))
 
 DEFINE_DIALOG(DIALOG_001, 1, 4, 95, 200, _("\
 Watch out! If you wander\n\

@@ -13,6 +13,8 @@
 #include "mario_geo_switch_case_ids.h"
 #include "surface_terrains.h"
 #include "macros.h"
+#include "gex.h"
+#include "hms.h"
 #include "segments.h"
 
 // Crash handler enhancement

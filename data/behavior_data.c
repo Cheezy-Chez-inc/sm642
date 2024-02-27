@@ -4414,7 +4414,6 @@ const BehaviorScript bhvVolcanoSoundLoop[] = {
 const BehaviorScript bhvCastleFlagWaving[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-    LOAD_ANIMATIONS(oAnimations, castle_grounds_seg7_anims_flags),
     ANIMATE(CASTLE_FLAG_ANIM_WAVE),
     CALL_NATIVE(bhv_castle_flag_init),
     BEGIN_LOOP(),

@@ -68,6 +68,8 @@ const LevelScript level_main_scripts_entry[] = {
     ALLOC_LEVEL_POOL(),
     LOAD_MODEL_FROM_GEO(MODEL_MARIO,                   mario_geo),
     LOAD_MODEL_FROM_GEO(MODEL_LUIGI,                   luigi_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_PEACH_PLAYER,            peach_player_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_TOAD_PLAYER,             toad_player_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SMOKE,                   smoke_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SPARKLES,                sparkles_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BUBBLE,                  bubble_geo),

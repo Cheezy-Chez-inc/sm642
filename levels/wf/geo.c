@@ -12,7 +12,9 @@
 #include "make_const_nonconst.h"
 
 #include "levels/wf/header.h"
+#include "levels/wf/areas/1/custom/header.h"
 
+#include "levels/wf/areas/1/custom/geoinclude.h"
 #include "levels/wf/areas/1/5/geo.inc.c"
 #include "levels/wf/areas/1/6/geo.inc.c"
 #include "levels/wf/areas/1/7/geo.inc.c"

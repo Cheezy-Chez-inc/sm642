@@ -29,6 +29,7 @@
  * NOTE: Default is 2, maximum is 4.
  * NOTE: This needs to be at least 2 for now for gamecube controller swap to work.
  */
+#define NUM_PLAYERS 2
 #define MAX_NUM_PLAYERS 2
 
 /**

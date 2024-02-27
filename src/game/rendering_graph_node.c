@@ -76,6 +76,11 @@ s16 gCurrAnimFrame;
 f32 gCurrAnimTranslationMultiplier;
 u16 *gCurrAnimAttribute;
 s16 *gCurrAnimData;
+u8 gCurrPlayerGraph;
+u8 gTempPlayerCount;
+u8 gSplitType = 0;
+u8 gNumPlayers = 2;
+
 
 struct AllocOnlyPool *gDisplayListHeap;
 
@@ -566,6 +571,14 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
 #else
         sAspectRatio = 4.0f / 3.0f; // 1.33333f
 #endif
+
+        if (gNumPlayers == 2) {
+            if (gSplitType == 0) {
+                sAspectRatio /= 2.0f;
+            } else {
+                sAspectRatio *= 2.0f;
+            }
+        }
 
         f32 vHalfFov = ( ((node->fov * 4096.f) + 8192.f) ) / 45.f;
 
@@ -1217,6 +1230,73 @@ void geo_process_object_parent(struct GraphNodeObjectParent *node) {
     }
 }
 
+
+void set_viewport_size(Vp *viewport, struct GraphNodeRoot *node) {
+    f32 pos[2] = {0.0f, 0.0f};
+    f32 size[2] = {0.0f, 0.0f};
+    switch (gCurrPlayerGraph) {
+        case 0:
+            if (gTempPlayerCount == 1) {
+                pos[0] = node->x * 4;
+                pos[1] = node->y * 4;
+                size[0] = node->width * 4;
+                size[1] = node->height * 4;
+            } else if (gTempPlayerCount == 2) {
+                if (gSplitType == 0) { 
+                    pos[0] = node->x * 2;
+                    pos[1] = node->y * 4;
+                    size[0] = node->width * 2;
+                    size[1] = node->height * 4;
+                } else {
+                    pos[0] = node->x * 4;
+                    pos[1] = node->y * 2;
+                    size[0] = node->width * 4;
+                    size[1] = node->height * 2;
+                }
+            } else {
+                pos[0] = node->x * 2;
+                pos[1] = node->y * 2;
+                size[0] = node->width * 2;
+                size[1] = node->height * 2;
+            }
+        break;
+        case 1:
+            if (gTempPlayerCount == 2) {
+                if (gSplitType == 0) { 
+                    pos[0] = node->x * 6;
+                    pos[1] = node->y * 4;
+                    size[0] = node->width * 2;
+                    size[1] = node->height * 4;
+                } else {
+                    pos[0] = node->x * 4;
+                    pos[1] = node->y * 6;
+                    size[0] = node->width * 4;
+                    size[1] = node->height * 2;
+                }
+            } else {
+                pos[0] = node->x * 6;
+                pos[1] = node->y * 2;
+                size[0] = node->width * 2;
+                size[1] = node->height *2;
+            }
+        break;
+        case 2:
+            pos[0] = node->x * 2;
+            pos[1] = node->y * 6;
+            size[0] = node->width * 2;
+            size[1] = node->height * 2;
+        break;
+        case 3:
+            pos[0] = node->x * 6;
+            pos[1] = node->y * 6;
+            size[0] = node->width * 2;
+            size[1] = node->height * 2;
+        break;
+    }
+    vec3s_set(viewport->vp.vtrans, pos[0], pos[1], 511);
+    vec3s_set(viewport->vp.vscale, size[0], size[1], 511);
+}
+
 /**
  * Process a held object node.
  */
@@ -1351,28 +1431,34 @@ void geo_process_node_and_siblings(struct GraphNode *firstNode) {
 void geo_process_root(struct GraphNodeRoot *node, Vp *b, Vp *c, s32 clearColor) {
     if (node->node.flags & GRAPH_RENDER_ACTIVE) {
         Mtx *initialMatrix;
-        Vp *viewport = alloc_display_list(sizeof(*viewport));
 
-        gDisplayListHeap = alloc_only_pool_init(main_pool_available() - sizeof(struct AllocOnlyPool), MEMORY_POOL_LEFT);
-        initialMatrix = alloc_display_list(sizeof(*initialMatrix));
-        gCurLookAt = (LookAt*)alloc_display_list(sizeof(LookAt));
-        bzero(gCurLookAt, sizeof(LookAt));
-
-        gMatStackIndex = 0;
-        gCurrAnimType = ANIM_TYPE_NONE;
-        vec3s_set(viewport->vp.vtrans, node->x * 4, node->y * 4, 511);
-        vec3s_set(viewport->vp.vscale, node->width * 4, node->height * 4, 511);
-
-        if (b != NULL) {
-            clear_framebuffer(clearColor);
-            make_viewport_clip_rect(b);
-            *viewport = *b;
+        gNumPlayers = CLAMP(gNumPlayers, 1, 4);
+        
+        if (gCurrLevelNum < 3) {
+            gTempPlayerCount = 1;
+        } else {
+            gTempPlayerCount = gNumPlayers;
         }
 
-        else if (c != NULL) {
-            clear_framebuffer(clearColor);
-            make_viewport_clip_rect(c);
-        }
+        for (gCurrPlayerGraph = 0; gCurrPlayerGraph < gTempPlayerCount; gCurrPlayerGraph++) {
+            Vp *viewport = alloc_display_list(sizeof(*viewport));
+
+            gDisplayListHeap = alloc_only_pool_init(main_pool_available() - sizeof(struct AllocOnlyPool), MEMORY_POOL_LEFT);
+            initialMatrix = alloc_display_list(sizeof(*initialMatrix));
+            gCurLookAt = (LookAt*)alloc_display_list(sizeof(LookAt));
+            bzero(gCurLookAt, sizeof(LookAt));
+            set_viewport_size(viewport, node);
+
+            if (b != NULL) {
+                clear_framebuffer(clearColor);
+                make_viewport_clip_rect(b);
+                *viewport = *b;
+            }
+
+            else if (c != NULL) {
+                clear_framebuffer(clearColor);
+                make_viewport_clip_rect(c);
+            }
 
         mtxf_identity(gMatStack[gMatStackIndex]);
         mtxf_to_mtx(initialMatrix, gMatStack[gMatStackIndex]);
@@ -1391,5 +1477,6 @@ void geo_process_root(struct GraphNodeRoot *node, Vp *b, Vp *c, s32 clearColor) 
         }
 #endif
         main_pool_free(gDisplayListHeap);
+    }
     }
 }

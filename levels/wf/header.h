@@ -5,6 +5,41 @@
 #include "game/moving_texture.h"
 
 // geo
+extern const GeoLayout wf_geo_5[];
+extern const GeoLayout wf_geo_6[];
+extern const GeoLayout wf_geo_7[];
+extern const GeoLayout wf_geo_8[];
+extern const GeoLayout wf_geo_9[];
+extern const GeoLayout wf_geo_10[];
+extern const GeoLayout wf_geo_12[];
+extern const GeoLayout wf_geo_13[];
+extern const GeoLayout wf_geo_15[];
+extern const GeoLayout wf_geo_16[];
+extern const GeoLayout mountain_geo[];
+
+// leveldata
+extern const Gfx mountain_1_dl_mesh[];
+extern const Gfx mountain_5_dl_mesh[];
+extern const Gfx mountain_5_lod_dl_mesh[];
+extern const Gfx mountain_6_dl_mesh[];
+extern const Gfx mountain_6_lod_dl_mesh[];
+extern const Gfx mountain_7_dl_mesh[];
+extern const Gfx mountain_8_dl_mesh[];
+extern const Gfx mountain_9_dl_mesh[];
+extern const Gfx mountain_10_dl_mesh[];
+extern const Gfx mountain_12_dl_mesh[];
+extern const Gfx mountain_12_lod_dl_mesh[];
+extern const Gfx mountain_13_dl_mesh[];
+extern const Gfx mountain_15_dl_mesh[];
+extern const Gfx mountain_16_dl_mesh[];
+extern const Gfx rotating_wooden_platform_decal_dl_mesh[];
+extern const Gfx extending_platform_decal_dl_mesh[];
+extern const Collision mountain_10_collision[];
+extern const Collision mountain_collision[];
+extern const MacroObject mountain_macro[];
+
+
+// geo
 extern const GeoLayout wf_geo_0007E0[];
 extern const GeoLayout wf_geo_000820[];
 extern const GeoLayout wf_geo_000860[];
@@ -35,7 +70,6 @@ extern const GeoLayout wf_geo_000B90[];
 extern const GeoLayout wf_geo_000BA8[];
 extern const GeoLayout wf_geo_000BC8[];
 extern const GeoLayout wf_geo_000BE0[];
-extern const GeoLayout wf_geo_000BF8[];
 
 // leveldata
 extern const Gfx wf_seg7_dl_070050C8[];
@@ -93,7 +127,6 @@ extern const Collision wf_seg7_collision_rotating_platform[];
 extern const Collision wf_seg7_collision_tower[];
 extern const Collision wf_seg7_collision_bullet_bill_cannon[];
 extern const Collision wf_seg7_collision_070102D8[];
-extern const MacroObject wf_seg7_macro_objs[];
 extern const struct MovtexQuadCollection wf_movtex_water[];
 
 // script

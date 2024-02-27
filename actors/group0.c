@@ -31,9 +31,11 @@
 #include FONT_C_FILE
 #endif
 
-#include "luigi/model.inc.c"
 #include "rex/model.inc.c"
 #include "rex/anims/data.inc.c"
 #include "rex/anims/table.inc.c"
 #include "stone_bridge/model.inc.c"
 #include "stone_bridge/collision.inc.c"
+#include "toad_player/model.inc.c"
+#include "peach_player/model.inc.c"
+#include "luigi/model.inc.c"

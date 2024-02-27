@@ -22,6 +22,7 @@
 #ifndef _ULTRA64_H_
 #define _ULTRA64_H_
 
+
 #include <PR/ultratypes.h>
 #include <PR/rcp.h>
 #include <PR/os.h>
@@ -37,5 +38,6 @@
 #include <PR/ultraerror.h>
 #include <PR/ultralog.h>
 #include <PR/rtc.h>
+
 
 #endif

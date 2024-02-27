@@ -57,7 +57,7 @@ $(eval $(call validate-option,LIBGCCDIR,trap divbreak nocheck))
 #   eep4k - uses EEPROM 4kbit
 #   eep16k - uses EEPROM 16kbit (There aren't any differences in syntax, but this is provided just in case)
 #   sram - uses SRAM 256Kbit
-SAVETYPE ?= sram
+SAVETYPE ?= eep4k
 $(eval $(call validate-option,SAVETYPE,eep4k eep16k sram))
 ifeq ($(SAVETYPE),eep4k)
   DEFINES += EEP=1 EEP4K=1
@@ -225,7 +225,7 @@ endif
 # allowing for usage of CEN64 (and possibly Project64) to print messages to terminal.
 #   1 - includes code in ROM
 #   0 - does not
-ISVPRINT ?= 1
+ISVPRINT ?= 0
 $(eval $(call validate-option,ISVPRINT,0 1))
 ifeq ($(ISVPRINT),1)
   DEFINES += ISVPRINT=1
@@ -373,7 +373,7 @@ CPP_FILES         := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
 LIBZ_C_FILES      := $(foreach dir,$(LIBZ_SRC_DIRS),$(wildcard $(dir)/*.c))
 GODDARD_C_FILES   := $(foreach dir,$(GODDARD_SRC_DIRS),$(wildcard $(dir)/*.c))
 S_FILES           := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.s))
-GENERATED_C_FILES := $(BUILD_DIR)/assets/mario_anim_data.c $(BUILD_DIR)/assets/demo_data.c $(BUILD_DIR)/assets/luigi_anim_data.c
+GENERATED_C_FILES := $(BUILD_DIR)/assets/mario_anim_data.c $(BUILD_DIR)/assets/luigi_anim_data.c $(BUILD_DIR)/assets/demo_data.c
 
 # Sound files
 SOUND_BANK_FILES    := $(wildcard sound/sound_banks/*.json)
@@ -793,7 +793,8 @@ $(BUILD_DIR)/%.inc.c: $(BUILD_DIR)/%
 $(BUILD_DIR)/assets/mario_anim_data.c: $(wildcard assets/anims/*.inc.c)
 	@$(PRINT) "$(GREEN)Generating animation data $(NO_COL)\n"
 	$(V)$(PYTHON) $(TOOLS_DIR)/mario_anims_converter.py > $@
-  
+
+# Generate animation data
 $(BUILD_DIR)/assets/luigi_anim_data.c: $(wildcard assets/anims/*.inc.c)
 	@$(PRINT) "$(GREEN)Generating animation data $(NO_COL)\n"
 	$(V)$(PYTHON) $(TOOLS_DIR)/luigi_anims_converter.py > $@

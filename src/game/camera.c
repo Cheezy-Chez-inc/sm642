@@ -167,6 +167,7 @@ struct LakituState gLakituState;
 struct CameraFOVStatus sFOVState;
 struct TransitionInfo sModeTransition;
 struct PlayerGeometry sMarioGeometry;
+struct PlayerGeometry sLuigiGeometry;
 struct Camera *gCamera;
 s16 sAvoidYawVel;
 s16 sCameraYawAfterDoorCutscene;
