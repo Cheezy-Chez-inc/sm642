@@ -409,7 +409,7 @@ u8 sFramesSinceCutsceneEnded = 0;
  */
 u8 sCutsceneDialogResponse = DIALOG_RESPONSE_NONE;
 struct PlayerCameraState *sMarioCamState = &gPlayerCameraState[0];
-// struct PlayerCameraState *sLuigiCamState = &gPlayerCameraState[1];
+struct PlayerCameraState *sLuigiCamState = &gPlayerCameraState[1];
 Vec3f sFixedModeBasePosition    = { 646.0f, 143.0f, -1513.0f };
 
 s32 update_radial_camera(struct Camera *c, Vec3f focus, Vec3f pos);
@@ -3155,8 +3155,8 @@ void reset_camera(struct Camera *c) {
     c->doorStatus = DOOR_DEFAULT;
     sMarioCamState->headRotation[0] = 0;
     sMarioCamState->headRotation[1] = 0;
-    // sLuigiCamState->headRotation[0] = 0;
-    // sLuigiCamState->headRotation[1] = 0;
+    sLuigiCamState->headRotation[0] = 0;
+    sLuigiCamState->headRotation[1] = 0;
     sMarioCamState->cameraEvent = CAM_EVENT_NONE;
     sMarioCamState->usedObj = NULL;
     gLakituState.shakeMagnitude[0] = 0;

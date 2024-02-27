@@ -1,6 +1,8 @@
 #include <PR/ultratypes.h>
 
 #include "area.h"
+#include "audio/load.h"
+#include "audio/external.h"
 #include "engine/math_util.h"
 #include "game_init.h"
 #include "gfx_dimensions.h"
@@ -1432,12 +1434,20 @@ void geo_process_root(struct GraphNodeRoot *node, Vp *b, Vp *c, s32 clearColor) 
     if (node->node.flags & GRAPH_RENDER_ACTIVE) {
         Mtx *initialMatrix;
 
+        if (gPlayer1Controller->buttonPressed & D_JPAD)
+            gSplitType ^= 1;
+
         gNumPlayers = CLAMP(gNumPlayers, 1, 4);
         
         if (gCurrLevelNum < 3) {
             gTempPlayerCount = 1;
+            gNumPlayers = 1;
+            
         } else {
             gTempPlayerCount = gNumPlayers;
+        if (gSoundMode == SOUND_MODE_STEREO){
+            gNumPlayers = 2;
+        }
         }
 
         for (gCurrPlayerGraph = 0; gCurrPlayerGraph < gTempPlayerCount; gCurrPlayerGraph++) {
