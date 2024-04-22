@@ -920,7 +920,8 @@ s32 act_ground_pound(struct MarioState *m) {
                 m->peakHeight = m->pos[1];
                 vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
             }
-        }
+
+
 
         m->vel[1] = -50.0f;
         mario_set_forward_vel(m, 0.0f);
@@ -968,6 +969,17 @@ s32 act_ground_pound(struct MarioState *m) {
             set_mario_action(m, ACT_BACKWARD_AIR_KB, 0);
         }
 #endif
+
+        }
+ 
+    if (m->input & INPUT_B_PRESSED) {
+        set_mario_action(m, ACT_DIVE, 0);
+        m->vel[1] = 30.0f; 
+        m->forwardVel = 40.0f; 
+        m->faceAngle[1] = m->intendedYaw;
+        return FALSE;
+    }
+
     }
 
     return FALSE;

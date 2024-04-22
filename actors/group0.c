@@ -39,3 +39,4 @@
 #include "toad_player/model.inc.c"
 #include "peach_player/model.inc.c"
 #include "luigi/model.inc.c"
+#include "wario/model.inc.c"

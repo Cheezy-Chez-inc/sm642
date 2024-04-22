@@ -9,6 +9,10 @@
 #include "engine/graph_node.h"
 #include "puppycam2.h"
 
+
+extern int playerforcam;
+
+
 #include "level_table.h"
 
 // X position of the mirror

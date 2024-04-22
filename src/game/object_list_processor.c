@@ -229,6 +229,7 @@ void copy_mario_state_to_object(void) {
         i++;
     }
 
+
     gCurrentObject->oVelX = gMarioStates[i].vel[0];
     gCurrentObject->oVelY = gMarioStates[i].vel[1];
     gCurrentObject->oVelZ = gMarioStates[i].vel[2];

@@ -1,3 +1,4 @@
+#include "texscroll.h"
 #include <ultra64.h>
 
 #include "PR/os_libc.h"
@@ -671,7 +672,15 @@ void initiate_warp(s16 destLevel, s16 destArea, s16 destWarpNode, s32 warpFlags)
  * corresponding warp node.
  */
 struct WarpNode *get_painting_warp_node(u8* marioIndex) {
-    for (u8 i = 0; i < 2; i++) {
+    u8 pl;
+   if (gSoundMode == SOUND_MODE_STEREO){
+    pl = 2;
+   }
+   else{
+    pl = 1;
+   }
+
+    for (u8 i = 0; i < pl; i++) {
         s32 paintingIndex = gMarioStates[i].floor->type - SURFACE_PAINTING_WARP_D3;
 
         if (paintingIndex >= PAINTING_WARP_INDEX_START && paintingIndex < PAINTING_WARP_INDEX_END) {
@@ -1199,7 +1208,7 @@ s32 update_level(void) {
 
     switch (sCurrPlayMode) {
         case PLAY_MODE_NORMAL:
-            changeLevel = play_mode_normal();
+            changeLevel = play_mode_normal(); scroll_textures();
             break;
         case PLAY_MODE_PAUSED:
             changeLevel = play_mode_paused();

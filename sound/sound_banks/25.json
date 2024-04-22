@@ -110,9 +110,11 @@
             "sound": "1C"
         },
         "inst3": {
-            "release_rate": 10,
-            "envelope": "envelope3",
-            "sound": "26_crystal_rhodes"
+            "release_rate": 19,
+            "normal_range_hi": 50,
+            "envelope": "envelope4",
+            "sound": "34b_organ",
+            "sound_hi": "34c_organ_lq"
         },
         "inst4": {
             "release_rate": 34,

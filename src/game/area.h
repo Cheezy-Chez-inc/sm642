@@ -78,6 +78,7 @@ struct Area {
 #ifdef BETTER_REVERB
     /*0x3C*/ u8 betterReverbPreset;
 #endif
+    /*0x04*/ struct GraphNodeRoot *graphNodeLuigi; // geometry layout data
 };
 
 // All the transition data to be used in screen_transition.c

@@ -2,8 +2,8 @@ static const struct Animation anim_67[] = {
     1,
     189,
     0,
-	15,							/* number of frames	 */
-	20,							/* number of joints	 */
+    0,
+    0x0F,
     ANIMINDEX_NUMPARTS(anim_67_indices),
     anim_67_values,
     anim_67_indices,

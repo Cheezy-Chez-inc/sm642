@@ -22,3 +22,4 @@
 #include "toad_player/geo.inc.c"
 #include "peach_player/geo.inc.c"
 #include "luigi/geo.inc.c"
+#include "wario/geo.inc.c"

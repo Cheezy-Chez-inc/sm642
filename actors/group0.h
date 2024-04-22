@@ -628,4 +628,6 @@ extern Gfx mat_luigi_head_f3dlite_material_015[];
 
 #include "luigi/geo_header.h"
 
+#include "wario/geo_header.h"
+
 #endif

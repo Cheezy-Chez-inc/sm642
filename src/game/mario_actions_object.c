@@ -43,7 +43,7 @@ s32 mario_update_punch_sequence(struct MarioState *m) {
             if (is_anim_past_end(m)) {
                 m->actionArg = ACT_ARG_PUNCH_SEQUENCE_FIRST_PUNCH_FAST;
             } else {
-                m->actionArg = ACT_ARG_PUNCH_SEQUENCE_FIRST_PUNCH;
+                m->actionArg = ACT_ARG_PUNCH_SEQUENCE_FIRST_PUNCH_FAST;
             }
 
             if (m->marioObj->header.gfx.animInfo.animFrame >= 2) {
